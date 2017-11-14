@@ -5,7 +5,7 @@ def phi(x, G):
     return 1.0/(1 + np.exp(-G * x))
 
 
-def run_network_recall(N, w, G, threshold, tau_m, tau_z,  T, dt, I_cue, T_cue):
+def run_network_recall(N, w, G, threshold, tau_m, tau_z,  T, dt, I_cue, T_cue, sigma=0):
 
     x = np.zeros(N)
     current = np.zeros(N)
@@ -23,7 +23,7 @@ def run_network_recall(N, w, G, threshold, tau_m, tau_z,  T, dt, I_cue, T_cue):
         x_history.append(np.copy(x))
         z_history.append(np.copy(z))
         current_history.append(np.copy(current))
-        current = np.dot(w, z)
+        current = np.dot(w, z) + sigma * np.random.randn(N)
         x += (dt/tau_m) * (phi(G, current - threshold) - x)
         z += (dt/ tau_z) * (x - z)
         if i < steps_cue:

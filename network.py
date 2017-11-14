@@ -42,9 +42,10 @@ def run_network_recall(N, w, G, threshold, tau_m, tau_z,  T, dt, I_cue, T_cue):
 
 
 def train_network(N, dt, training_time, inter_sequence_time, sequences, tau_z, tau_z_post, tau_w,
-                  epochs=1, max_w=1.0, min_w=None):
+                  epochs=1, max_w=1.0, min_w=None, save_w_history=False):
 
     w = np.zeros((N, N))
+    w_history = [w]
 
     inter_sequence_steps = int(inter_sequence_time / dt)
 
@@ -82,8 +83,21 @@ def train_network(N, dt, training_time, inter_sequence_time, sequences, tau_z, t
         # This is the pre-synaptic rule (check this statement)
         negative = np.outer(1 - z_post, z)
         if min_w is None:
-            w += (dt / tau_w) * ( (max_w - w) * normal - negative)
+            w += (dt / tau_w) * ((max_w - w) * normal - negative)
         else:
-            w += (dt / tau_w) * ( (max_w - w) * normal + (min_w - w) * negative)
+            w += (dt / tau_w) * ((max_w - w) * normal + (min_w - w) * negative)
 
-    return w, x_total, z_history, z_post_history
+        if save_w_history:
+            w_history.append(np.copy(w))
+
+
+    dic = {}
+    dic['w'] = w
+    dic['x'] = x_example
+    dic['z'] = z_history
+    dic['z_post'] = z_post_history
+
+    if save_w_history:
+        dic['w_history'] = np.array(w_history)
+
+    return dic

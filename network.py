@@ -41,27 +41,29 @@ def run_network_recall(N, w, G, threshold, tau_m, tau_z,  T, dt, I_cue, T_cue):
     return dic
 
 
-def train_network(N, dt, training_time, inter_sequence_time, sequences, tau_z, tau_z_post, tau_w, max_w=1.0, min_w=None):
+def train_network(N, dt, training_time, inter_sequence_time, sequences, tau_z, tau_z_post, tau_w,
+                  epochs=1, max_w=1.0, min_w=None):
 
     w = np.zeros((N, N))
 
     inter_sequence_steps = int(inter_sequence_time / dt)
 
     x_total = np.array([]).reshape(0, N)
-    for sequence in sequences:
-        n_sequence = len(sequence)
-        training_steps = int(training_time / dt)
+    for epoch in range(epochs):
+        for sequence in sequences:
+            n_sequence = len(sequence)
+            training_steps = int(training_time / dt)
 
-        for element in sequence:
-            x = np.zeros((training_steps, N))
-            for time in range(training_steps):
-                x[time, element] = 1.0
-            # Concatenate for the total history
+            for element in sequence:
+                x = np.zeros((training_steps, N))
+                for time in range(training_steps):
+                    x[time, element] = 1.0
+                # Concatenate for the total history
+                x_total = np.concatenate((x_total, x), axis=0)
+
+            # Inter-sequence steps
+            x = np.zeros((inter_sequence_steps, N))
             x_total = np.concatenate((x_total, x), axis=0)
-
-        # Inter-sequence steps
-        x = np.zeros((inter_sequence_steps, N))
-        x_total = np.concatenate((x_total, x), axis=0)
 
     # Train the Z-filters and w
     z = np.zeros(N)
@@ -82,6 +84,6 @@ def train_network(N, dt, training_time, inter_sequence_time, sequences, tau_z, t
         if min_w is None:
             w += (dt / tau_w) * ( (max_w - w) * normal - negative)
         else:
-            w += (dt / tau_w) * ( (max_w - w) * normal - min_w * negative)
+            w += (dt / tau_w) * ( (max_w - w) * normal + (min_w - w) * negative)
 
     return w, x_total, z_history, z_post_history

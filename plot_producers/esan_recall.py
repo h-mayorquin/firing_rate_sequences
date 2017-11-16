@@ -7,7 +7,7 @@ import numpy as np
 import seaborn as sns
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 
-plt.rcParams["figure.figsize"] = [16,9]
+plt.rcParams["figure.figsize"] = [16, 9]
 sns.set(font_scale=3.0)
 
 from network import train_network, run_network_recall
@@ -25,7 +25,7 @@ def grayify_cmap(cmap):
     luminance = np.sqrt(np.dot(colors[:, :3] ** 2, RGB_weight))
     colors[:, :3] = luminance[:, np.newaxis]
 
-    return cmap.from_list(cmap.name + "_grayscale", colors, cmap.N)
+    return matplotlib.colors.LinearSegmentedColormap(cmap.name + "_grayscale", colors, cmap.N)
 
 # First the connectivity matrix
 N = 10
@@ -44,7 +44,7 @@ G = 100.0
 tau_m = 0.010
 T = 2.0
 I_cue = 0
-T_cue = 0.050
+T_cue = 0.100
 dt = 0.001
 tau_z = 0.050
 threshold = 0.3
@@ -68,12 +68,22 @@ patterns = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 # patterns = sequence
 
 norm = matplotlib.colors.Normalize(0, N)
-cmap = 'inferno'
+cmap = matplotlib.cm.inferno
 
 for pattern in patterns:
-    ax1.plot(time, x_history[:, pattern], color=norm(pattern), label='x' + str(pattern))
-    ax2.plot(time, current_history[:, pattern], label='current' + str(pattern))
-    ax3.plot(time, z_history[:, pattern], label='z ' + str(pattern))
+    width = pattern * 0.5 + 0.5
+    if pattern == 0:
+        label = 'Cue'
+    else:
+        label = str(pattern)
+
+    ax1.plot(time, x_history[:, pattern], color=cmap(norm(pattern)), linewidth=width, label=label)
+    ax2.plot(time, current_history[:, pattern], color=cmap(norm(pattern)), linewidth=width, label='x' + label)
+    ax3.plot(time, z_history[:, pattern], color=cmap(norm(pattern)), linewidth=width, label='x' + label)
+
+ax1.grid()
+ax2.grid()
+ax3.grid()
 
 ax1.set_ylim([-0.1, 1.1])
 ax3.set_ylim([-0.1, 1.1])
@@ -93,8 +103,8 @@ ax3.set_xlabel('Time (s)')
 # Here we plot our connectivity matrix
 ax_conn = fig.add_subplot(gs[:2, 1])
 cmap = 'seismic'
-cmap = 'inferno'
-cmap = grayify_cmap(cmap)
+cmap = matplotlib.cm.inferno
+# cmap = grayify_cmap(cmap)
 im = ax_conn.imshow(w, cmap=cmap)
 
 ax_conn.set_xlabel('Pre')
@@ -105,6 +115,21 @@ ax_conn.grid()
 
 divider = make_axes_locatable(ax_conn)
 cax = divider.append_axes('right', size='5%', pad=0.05)
+
+# Let's define our own color map
+print(cmap(0))
+print(cmap(1))
+print(cmap(2))
+print(cmap(3))
+cmap = matplotlib.colors.ListedColormap([cmap(0), cmap(1), cmap(2)])
+bounds = [-3, 0, 1, 2]
+print(cmap(0))
+print(cmap(1))
+print(cmap(2))
+print(cmap(3))
+
+norm = matplotlib.colors.BoundaryNorm(bounds, cmap.N)
+# fig.colorbar(im, cax=cax, orientation='vertical', cmap=cmap, norm=norm, boundaries=bounds, ticks=bounds, spacing='uniform')
 fig.colorbar(im, cax=cax, orientation='vertical')
 
 # Let's plot our legends
@@ -113,7 +138,7 @@ fig.colorbar(im, cax=cax, orientation='vertical')
 handles, labels = ax1.get_legend_handles_labels()
 # ax_legend.legend(ax1.get_legend_handles_labels())
 
-fig.legend(handles=handles, labels=labels, loc=(0.6, 0.08), fancybox=True, frameon=True, fontsize=28, ncol=2)
+fig.legend(handles=handles, labels=labels, loc=(0.6, 0.05), fancybox=True, frameon=True, fontsize=28, ncol=2)
 
-
+# plt.show()
 fig.savefig('./plot_producers/recall.eps', frameon=False, dpi=110, bbox_inches='tight')

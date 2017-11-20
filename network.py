@@ -122,7 +122,7 @@ def run_network_recall_limit(N, w, G, threshold, tau_m, tau_z,  T, dt, I_cue, T_
         z_history.append(np.copy(z))
         current_history.append(np.copy(current))
         current = np.dot(w, z) + sigma * np.random.randn(N)
-        x = phi(G, current - threshold)
+        x = np.heaviside(current - threshold, 1.0)
         if i < steps_cue:
             x[I_cue] = 1
         z += (dt / tau_z) * (x - z)

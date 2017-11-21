@@ -20,3 +20,51 @@ def get_recall_duration_sequence(x_history):
         durations.append(duration)
 
     return np.nanmedian(durations[1:-1]), np.nanstd(durations[1:-1]), durations
+
+
+def time_charge(tau_z, A, threshold):
+    """
+    This is how long it takes for the first pattern to charge if you want the sequence mechanism to fire correclty
+    :param tau_z: tau_z
+    :param A:  self-excitation
+    :param threshold:  threshold of the non-linear function
+    :return: the time it takes for the neuron to charge enough (lower limit)
+    """
+
+    return tau_z * np.log(A / (A - threshold))
+
+
+def time_t1(tau_z, T, I, threshold):
+
+    return tau_z * np.log((T + I) / (T - threshold))
+
+
+def time_t2(tau_z, A, T, I, threshold):
+
+    t1 = time_t1(tau_z, T, I, threshold)
+    B = np.exp(-t1 / tau_z)
+    return tau_z * np.log((A * B + I * B - I) / (A - (threshold + I)))
+
+
+def time_t2_complicated(tau_z, A, T, I, threshold):
+
+    t1 = time_t1(tau_z, T, I, threshold)
+    B = np.exp(-t1 / tau_z)
+    D = 1.0 - B
+
+    nominator = B * D * (T + I) + I * D - A * B
+
+    return tau_z * np.log(nominator / ((threshold + I) - A))
+
+
+def time_t1_local(tau_z, T, threshold):
+
+    return tau_z * np.log(T / (T - threshold))
+
+
+def time_t2_local(tau_z, A, T, I, threshold):
+
+    t1 = time_t1_local(tau_z, T, threshold)
+    B = np.exp(-t1 / tau_z)
+
+    return tau_z * np.log((A * B - I) / (A - (threshold + I)))

@@ -68,3 +68,39 @@ def time_t2_local(tau_z, A, T, I, threshold):
     B = np.exp(-t1 / tau_z)
 
     return tau_z * np.log((A * B - I) / (A - (threshold + I)))
+
+
+def create_sequence_chain(number_of_sequences, half_width, units_to_overload):
+    chain = []
+    number = 0
+    for _ in range(number_of_sequences):
+
+        sequence = []
+
+        # The first half
+        i = 0
+        while i < half_width:
+            if number in units_to_overload:
+                number += 1
+
+            else:
+                sequence.append(number)
+                number += 1
+                i += 1
+
+        # The overload units in the middle
+        sequence += units_to_overload
+
+        # The second half
+        i = 0
+        while i < half_width:
+            if number in units_to_overload:
+                number += 1
+            else:
+                sequence.append(number)
+                number += 1
+                i += 1
+
+        chain.append(sequence)
+
+    return chain

@@ -1,8 +1,8 @@
 import numpy as np
 
 
-def designed_matrix_sequences(N, sequences, self_excitation=1, transition=1, inhbition=1):
-    w = np.ones((N, N)) * -inhbition
+def designed_matrix_sequences(N, sequences, self_excitation=1, transition=1, inhibition=1):
+    w = np.ones((N, N)) * -inhibition
 
     # Self-excitation
     for sequence in sequences:
@@ -17,7 +17,7 @@ def designed_matrix_sequences(N, sequences, self_excitation=1, transition=1, inh
     return w
 
 
-def designed_matrix_sequences_local(N, sequences, self_excitation=1, transition=1, inhbition=1):
+def designed_matrix_sequences_local(N, sequences, self_excitation=1, transition=1, inhibition=1):
     w = np.zeros((N, N))
 
     # Self-excitation
@@ -29,6 +29,6 @@ def designed_matrix_sequences_local(N, sequences, self_excitation=1, transition=
     for sequence in sequences:
         for index in range(len(sequence) - 1):
             w[sequence[index + 1], sequence[index]] = transition
-            w[sequence[index], sequence[index + 1]] = -inhbition
+            w[sequence[index], sequence[index + 1]] = -inhibition
 
     return w

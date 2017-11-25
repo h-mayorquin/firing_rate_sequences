@@ -65,6 +65,6 @@ ax.set_xlabel('Transition')
 ax.set_ylabel('Recall time')
 ax.legend()
 
-fig.savefig('./plot_producers/dynamica_range.eps', frameon=False, dpi=110, bbox_inches='tight')
+fig.savefig('./plot_producers/dynamicaL_range.eps', frameon=False, dpi=110, bbox_inches='tight')
 
 

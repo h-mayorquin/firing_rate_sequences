@@ -26,7 +26,7 @@ sequences = [sequence1]
 pattern = 3
 pattern_from = 2
 
-saved_matrix = False
+saved_matrix = True
 outfile = './data2.npz'
 if not saved_matrix:
     n_samples = 10000
@@ -46,6 +46,7 @@ if not saved_matrix:
         self = w[pattern, pattern]
         exc = w[pattern, pattern_from]
         inh = w[pattern_from, pattern]
+
         y[index, 0] = self
         y[index, 1] = exc
         y[index, 2] = inh
@@ -53,8 +54,6 @@ if not saved_matrix:
         X[index, 0] = tau_z
         X[index, 1] = max_w
         X[index, 2] = min_w
-
-
 
     # Now we save both X and Y
 
@@ -73,4 +72,17 @@ score = reg.score(X_test, y_test)
 A = reg.coef_
 B = np.linalg.inv(A)
 print('score', score)
+
+
+# I want to calculate the values for which the self-excitation and the transition are positive
+positive_A = y[:, 0] > 0
+positive_T = y[:, 1] > 0
+negative_I = y[:, 2] < 0
+
+# Now the values that generated the valures in the correct domain are
+domain_indexes = positive_A * positive_T * negative_I
+X_right = X[domain_indexes, : ]
+
+
+
 

@@ -14,7 +14,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="plasticity_diagram.svg">
+   sodipodi:docname="plasticity_diagram.eps">
   <defs
      id="defs4">
     <marker
@@ -39,8 +39,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="3.959798"
-     inkscape:cx="182.2452"
-     inkscape:cy="961.75079"
+     inkscape:cx="182.22277"
+     inkscape:cy="971.87454"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -185,7 +185,7 @@
          y="72.362183"
          x="280"
          id="tspan4478"
-         sodipodi:role="line">dw + </tspan></text>
+         sodipodi:role="line">dw 0 </tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:none;marker-end:url(#SemiCircleIn)"
        d="m 265,117.36218 c 0,0 30,-24.999997 50,-5"
@@ -242,9 +242,9 @@
        id="text4528"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
-         id="tspan4530"
          x="280"
-         y="152.36218">dw + </tspan></text>
+         y="152.36218"
+         id="tspan4596">dw 0 </tspan></text>
     <path
        sodipodi:nodetypes="cc"
        inkscape:connector-curvature="0"
@@ -303,6 +303,6 @@
          y="152.36218"
          x="120"
          id="tspan4556"
-         sodipodi:role="line">dw + </tspan></text>
+         sodipodi:role="line">dw - </tspan></text>
   </g>
 </svg>

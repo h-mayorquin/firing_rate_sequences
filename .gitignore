@@ -104,3 +104,8 @@ ENV/
 *.eps
 *.png
 
+# Latex
+*.ps
+*.aux
+*.dvi
+

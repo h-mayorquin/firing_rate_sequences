@@ -86,7 +86,7 @@ This is a sample file. Please use this file to correctly typeset a
 submission to the ESANN conference. The associated pdf file will
 help you to have an idea of what your paper should look like.
 
-\subsection{Neural Network}
+\section{The neural network}
 
 \begin{align}
 \tau_m \dfrac{dx}{dt} &= \Phi(wx - \theta) \\
@@ -96,92 +96,58 @@ help you to have an idea of what your paper should look like.
 \begin{figure}[h!]
 \centering
 \includegraphics[scale=2.0]{diagram.eps}
-\caption{ESANN 2005: Announcement and call for
-papers.}\label{Fig:MV}
+\caption{The connectivity}\label{Fig:diagram}
 \end{figure}
 
 
-Please avoid using DVI2PDF or PS2PDF converters: some undesired
-shifting/scaling may occur when using these programs
-It is strongly recommended to use the DVIPS converters, and to submit
-PS file. You may submit a PDF file if and only if you use ADOBE ACROBAT
-to convert your PS file to PDF.
-%
-Check that you have set the paper size to A4 (and NOT to letter) in your
-dvi2ps converter, in Adobe Acrobat if you use it, and in any printer driver
-that you could use.  You also have to disable the 'scale to fit paper' option
-of your printer driver.
-%
-In any case, please check carefully that the final size of the top and
-bottom margins is 5.2 cm and of the left and right margins is 4.4 cm.
-%t is your responsibility to verify this important requirement.  If these margin requirements and not fulfilled at the end of your file generation process, please use the commands at the beginning of the ESANNV2.tex file to correct them.  Otherwise, please do not modify these commands.
-
-
-\subsection{Additional packages and functions}
-
-Update the sample file according to your text. You can add
-packages or declare new \LaTeX\ functions if and only if there is no conflict between your packages and the esannV2.cls style file.
-
-\subsection{Style information}
-
-\subsubsection{Page numbers}
-Please do not add page numbers to this style; page numbers will be added by the publisher.
-\subsubsection{Page headings}
-Do not add headings to your document.
-\subsection{Mathematics}
-You may include additional packages for typesetting
-algorithms, mathematical formula or to define new operators and environments
-if and only if there is no conflict with the esannV2.cls
-file.
-
-It is recommended to avoid the numbering of equations when not
-necessary. When dealing with equation arrays, it could be
-necessary to label several (in)equalities. You can do it using the
-`$\backslash$stackrel' operator (see the ESANNV2.tex source file);
-example:
-
-\begin{eqnarray}
-c&=&|d|+|e|\nonumber\\
-&\stackrel{\text{(a)}}{=}&d+e\nonumber\\
-&\stackrel{\text{(b)}}{\geq}&\sqrt{f}\enspace,
-\end{eqnarray}
-\noindent where the equality (a) results from the fact that both
-$d$ and $e$ are positive while (b) comes from the definition of
-$f$.
-
-\subsection{Tables and figures}
-
-Figure \ref{Fig:MV} shows an example of figure and related
-caption.  Do not use too small symbols and lettering in your
-figures.  Warning: your paper will be printed in black and white
-in the proceedings.  You may insert color figures, but it is your
-responsibility to check that they print correctly in black and
-white.  The color version will be kept in the ESANN electronic
-proceedings available on the web.
+\subsection{A recall example}
 
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=0.6]{ESANN2005BW.eps}
-\caption{ESANN 2005: Announcement and call for
-papers.}\label{Fig:MV}
+\includegraphics[scale=0.3]{recall.eps}
+\caption{A recall example}\label{Fig:recall}
 \end{figure}
 
-Table \ref{Tab:AgeWeight} shows an example of table.
 
-\begin{table}[h!]
-  \centering
-  \begin{tabular}{|c|c|c|}
-    \hline
-    ID & age & weight \\
-    \hline
-    1& 15 & 65 \\
-    2& 24 & 74\\
-    3& 18 & 69 \\
-    4& 32 & 78 \\
-    \hline
-  \end{tabular}
-  \caption{Age and weight of people.}\label{Tab:AgeWeight}
-\end{table}
+\section{Dynamic Range}
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.25]{dynamical_range.eps}
+\caption{The dynamica range}\label{Fig:dynamical_range}
+\end{figure}
+
+
+
+\section{Learning Rule}
+
+\begin{align}
+\tau_w \dfrac{dw}{dt} &= (w_{max} - w) z_{pre}z_{post} + (w_{min} - w) (z_{post} - 1)z_{pre} 
+\end{align}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=1.3]{plasticity_diagram.eps}
+\caption{This is how plasticity works}\label{Fig:plasticity diagram}
+\end{figure}
+
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.3]{training_rule1.eps}
+\caption{The training in action}\label{Fig:epochs}
+\end{figure}
+
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.3]{training_rule_quantities.eps}
+\caption{The dynamics of the learning rule}\label{Fig:learning_quantities}
+\end{figure}
+
+\section{Disambiguation}
+
+
+\section{Discussion}
 
 \section{Citation}
 This ESANNV2.tex file defines how to insert references, both for

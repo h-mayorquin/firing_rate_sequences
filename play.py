@@ -26,10 +26,10 @@ sequences = [sequence1]
 pattern = 3
 pattern_from = 2
 
-saved_matrix = True
-outfile = './data1.npz'
+saved_matrix = False
+outfile = './data2.npz'
 if not saved_matrix:
-    n_samples = 5000
+    n_samples = 10000
     max_w_vector = np.random.uniform(low=1, high=200, size=n_samples)
     min_w_vector = -np.random.uniform(low=1, high=100, size=n_samples)
     tau_z_vector = np.random.uniform(low=0.050, high=1.050, size=n_samples)

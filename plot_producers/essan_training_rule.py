@@ -12,9 +12,11 @@ sns.set(font_scale=3.0)
 
 from network import run_network_recall, train_network, run_network_recall_limit
 
+independent_labels = False  # Whehter you want an extra weight trained matrix or the labels
+
 N = 10
-tau_z = 0.150
-tau_z_1 = 0.050
+tau_z = 0.050
+tau_z_1 = 0.150
 tau_z_post = 0.005
 tau_w = 0.100
 max_w = 30.0
@@ -53,7 +55,10 @@ fig = plt.figure(figsize=(16, 12))
 gs = gridspec.GridSpec(2, 2)
 ax1 = fig.add_subplot(gs[0, 0])
 ax2 = fig.add_subplot(gs[1, :])
-ax3 = fig.add_subplot(gs[0, 1])
+
+if not independent_labels:
+    print('here 1')
+    ax3 = fig.add_subplot(gs[0, 1])
 
 norm = matplotlib.colors.Normalize(0, 2)
 cmap = matplotlib.cm.inferno
@@ -70,22 +75,11 @@ ax1.xaxis.set_ticklabels([])
 ax1.yaxis.set_ticklabels([])
 ax1.grid()
 
-# The second w plot
-im3 = ax3.matshow(w1, cmap=cmap)
-divider = make_axes_locatable(ax3)
-cax = divider.append_axes('right', size='5%', pad=0.05)
-fig.colorbar(im3, cax=cax)
-
-ax3.set_xlabel('Pre')
-ax3.set_ylabel('Post')
-ax3.xaxis.set_ticklabels([])
-ax3.yaxis.set_ticklabels([])
-ax3.grid()
 
 # The epochs plot
-ax2.plot(time, w_10, color='blue', ls=':', linewidth=2, label='Exc')
-ax2.plot(time, w_01, color='red', ls='-', linewidth=4, label='Inh')
-ax2.plot(time, w_11, color='green', ls='--', linewidth=6, label='Self')
+ax2.plot(time, w_10,  ':', color='blue', markersize=1, linewidth=2, label='Exc')
+ax2.plot(time, w_01, '-', color='red',  markersize=1, linewidth=4, label='Inh')
+ax2.plot(time, w_11, '--', color='green', markersize=1, linewidth=6, label='Self')
 
 tick_spacing = 2
 labels = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
@@ -93,10 +87,35 @@ ticks =  [0, 2,    4,   6,   8,   10,  12,  14, 16,  18, 20]
 
 plt.xticks(ticks, labels)
 
-ax2.legend(loc=4)
+if not independent_labels:
+    print('here 2')
+    # ax2.legend(loc=4)
 
 ax2.set_xlabel('Epochs')
 ax2.set_ylabel('Weight')
-ax2.set_xlim([-1, 25])
+# ax2.set_xlim([-1, 25])
+
+# Either a matrix or a legend
+if not independent_labels:
+    print('here 3')
+    im3 = ax3.matshow(w1, cmap=cmap)
+    divider = make_axes_locatable(ax3)
+    cax = divider.append_axes('right', size='5%', pad=0.05)
+    fig.colorbar(im3, cax=cax)
+
+    ax3.set_xlabel('Pre')
+    ax3.set_ylabel('Post')
+    ax3.xaxis.set_ticklabels([])
+    ax3.yaxis.set_ticklabels([])
+    ax3.grid()
+
+    handles, labels = ax2.get_legend_handles_labels()
+    fig.legend(handles=handles, labels=labels, loc=(0.3, 0.15), fancybox=False, frameon=False, fontsize=28, ncol=3)
+
+else:
+    handles, labels = ax2.get_legend_handles_labels()
+    fig.legend(handles=handles, labels=labels, loc=(0.6, 0.65), fancybox=True, frameon=True, fontsize=28, ncol=1)
+
+
 
 fig.savefig('./plot_producers/training_rule1.eps', frameon=False, dpi=110, bbox_inches='tight')

@@ -140,3 +140,42 @@ def run_network_recall_limit(N, w, G, threshold, tau_m, tau_z,  T, dt, I_cue, T_
     dic['current'] = current_history
 
     return dic
+
+def run_network_recall_limit_end(N, w, G, threshold, tau_m, tau_z,  T, dt, I_cue, I_end, T_cue, sigma=0):
+
+    x = np.zeros(N)
+    current = np.zeros(N)
+    z = np.zeros(N)
+    x[I_cue] = 1.0  # Initial condition
+    z[I_cue] = 0.0
+
+    x_history = []
+    z_history = []
+    current_history = []
+
+    steps = int(T / dt)
+    steps_cue = int(T_cue / dt)
+    for i in range(steps):
+        x_history.append(np.copy(x))
+        z_history.append(np.copy(z))
+        current_history.append(np.copy(current))
+        current = np.dot(w, z) + sigma * np.random.randn(N)
+        x = np.heaviside(current - threshold, 1.0)
+        if i < steps_cue:
+            x[I_cue] = 1
+        z += (dt / tau_z) * (x - z)
+
+        if x[I_end] > 0.5:
+            break
+
+    x_history = np.array(x_history)
+    z_history = np.array(z_history)
+    current_history = np.array(current_history)
+
+    dic = {}
+    dic['x'] = x_history
+    dic['z'] = z_history
+    dic['current'] = current_history
+
+    return dic
+

@@ -9,6 +9,7 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 plt.rcParams["figure.figsize"] = [16, 9]
 sns.set(font_scale=3.0)
+sns.set_style(style='white')
 
 from network import run_network_recall, train_network, run_network_recall_limit
 
@@ -61,7 +62,7 @@ if not independent_labels:
     ax3 = fig.add_subplot(gs[0, 1])
 
 norm = matplotlib.colors.Normalize(0, 2)
-cmap = matplotlib.cm.inferno
+cmap = matplotlib.cm.inferno_r
 
 # The first w plot
 im = ax1.matshow(w, cmap=cmap)
@@ -73,13 +74,13 @@ ax1.set_xlabel('Pre')
 ax1.set_ylabel('Post')
 ax1.xaxis.set_ticklabels([])
 ax1.yaxis.set_ticklabels([])
-ax1.grid()
+
 
 
 # The epochs plot
-ax2.plot(time, w_10,  ':', color='blue', markersize=1, linewidth=2, label='Exc')
-ax2.plot(time, w_01, '-', color='red',  markersize=1, linewidth=4, label='Inh')
-ax2.plot(time, w_11, '--', color='green', markersize=1, linewidth=6, label='Self')
+ax2.plot(time, w_10,  ':', color='blue', markersize=1, linewidth=2, label=r'$Exc_T$')
+ax2.plot(time, w_01, '-', color='red',  markersize=1, linewidth=4, label=r'$Inh$')
+ax2.plot(time, w_11, '--', color='green', markersize=1, linewidth=6, label=r'$Exc_{self}$')
 
 tick_spacing = 2
 labels = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
@@ -107,7 +108,6 @@ if not independent_labels:
     ax3.set_ylabel('Post')
     ax3.xaxis.set_ticklabels([])
     ax3.yaxis.set_ticklabels([])
-    ax3.grid()
 
     handles, labels = ax2.get_legend_handles_labels()
     fig.legend(handles=handles, labels=labels, loc=(0.3, 0.15), fancybox=False, frameon=False, fontsize=28, ncol=3)
@@ -118,4 +118,4 @@ else:
 
 
 
-fig.savefig('./plot_producers/training_rule1.eps', frameon=False, dpi=110, bbox_inches='tight')
+fig.savefig('./plot_producers/training_rule.eps', frameon=False, dpi=110, bbox_inches='tight')

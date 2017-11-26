@@ -9,6 +9,7 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 plt.rcParams["figure.figsize"] = [16, 9]
 sns.set(font_scale=3.0)
+sns.set_style(style='white')
 
 from network import train_network, run_network_recall
 from connectivity import designed_matrix_sequences
@@ -37,7 +38,7 @@ sequence1 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 sequences = [sequence1]
 
 w = designed_matrix_sequences(N, sequences=sequences, self_excitation=self_excitation,
-                              inhbition=inhibition, transition=transition)
+                              inhibition=inhibition, transition=transition)
 
 # Now the recall
 G = 100.0
@@ -64,11 +65,15 @@ ax1 = fig.add_subplot(gs[0, 0])
 ax2 = fig.add_subplot(gs[1, 0])
 ax3 = fig.add_subplot(gs[2, 0])
 
+ax1.grid()
+ax2.grid()
+ax3.grid()
+
 patterns = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 # patterns = sequence
 
 norm = matplotlib.colors.Normalize(0, N)
-cmap = matplotlib.cm.inferno
+cmap = matplotlib.cm.inferno_r
 
 for pattern in patterns:
     width = pattern * 0.5 + 0.5
@@ -102,8 +107,10 @@ ax3.set_xlabel('Time (s)')
 
 # Here we plot our connectivity matrix
 ax_conn = fig.add_subplot(gs[:2, 1])
+ax_conn.grid()
 cmap = 'seismic'
-cmap = matplotlib.cm.inferno
+cmap = matplotlib.cm.inferno_r
+# cmap = matplotlib.cm.gray_r
 # cmap = grayify_cmap(cmap)
 im = ax_conn.imshow(w, cmap=cmap)
 
@@ -117,18 +124,10 @@ divider = make_axes_locatable(ax_conn)
 cax = divider.append_axes('right', size='5%', pad=0.05)
 
 # Let's define our own color map
-print(cmap(0))
-print(cmap(1))
-print(cmap(2))
-print(cmap(3))
-cmap = matplotlib.colors.ListedColormap([cmap(0), cmap(1), cmap(2)])
-bounds = [-3, 0, 1, 2]
-print(cmap(0))
-print(cmap(1))
-print(cmap(2))
-print(cmap(3))
+# cmap = matplotlib.colors.ListedColormap([cmap(0), cmap(1), cmap(2)])
+# bounds = [-3, 0, 1, 2]
 
-norm = matplotlib.colors.BoundaryNorm(bounds, cmap.N)
+# norm = matplotlib.colors.BoundaryNorm(bounds, cmap.N)
 # fig.colorbar(im, cax=cax, orientation='vertical', cmap=cmap, norm=norm, boundaries=bounds, ticks=bounds, spacing='uniform')
 fig.colorbar(im, cax=cax, orientation='vertical')
 
@@ -138,7 +137,8 @@ fig.colorbar(im, cax=cax, orientation='vertical')
 handles, labels = ax1.get_legend_handles_labels()
 # ax_legend.legend(ax1.get_legend_handles_labels())
 
-fig.legend(handles=handles, labels=labels, loc=(0.6, 0.05), fancybox=True, frameon=True, fontsize=28, ncol=2)
+fig.legend(handles=handles, labels=labels, loc=(0.62, 0.07), fancybox=True, frameon=True, facecolor=(0.9, 0.9, 0.9),
+           fontsize=28, ncol=2)
 
 # plt.show()
 fig.savefig('./plot_producers/recall.eps', frameon=False, dpi=110, bbox_inches='tight')

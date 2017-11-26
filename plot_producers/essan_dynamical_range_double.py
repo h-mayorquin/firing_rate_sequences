@@ -9,6 +9,7 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 plt.rcParams["figure.figsize"] = [16, 9]
 sns.set(font_scale=3.0)
+sns.set_style(style='white')
 
 from network import run_network_recall, train_network, run_network_recall_limit
 from connectivity import designed_matrix_sequences, designed_matrix_sequences_local
@@ -62,15 +63,16 @@ ax2 = fig.add_subplot(gs[1, 1])
 
 plt.tight_layout()
 
-ax.plot(transition_vector, recall_times, '*-', markersize=13, label='recall time')
+ax.plot(transition_vector, recall_times, '*', markersize=15, label='recall time')
 ax.plot(transition_vector, time_t1_recall, label='theoretical')
 
 ax.axhline(0, ls='--', color='black')
 ax.axvline(threshold, ls=':', color='grey', label='threshold')
 
-ax.set_title('Dynamic Range')
-ax.set_xlabel('Recall time')
-ax.set_ylabel('Transition')
+ax.set_title('Dynamical Range')
+ax.set_xlabel(r'$Exc_T$')
+ax.set_ylabel('Recall time (s)')
+
 ax.legend()
 
 # Here the examples
@@ -90,12 +92,12 @@ x_history = dic['x']
 
 im1 = ax1.imshow(x_history.T, aspect='auto', cmap=cmap)
 
-ax1.set_xlabel('Unit')
-ax1.set_ylabel('Time')
-ax1.set_title('Transition = ' + str(transition))
+ax1.set_xlabel('Time')
+ax1.set_ylabel('Unit')
+ax1.set_title(r'$Exc_T$ = ' + str(transition))
 ax1.xaxis.set_ticklabels([])
 ax1.yaxis.set_ticklabels([])
-ax1.grid()
+
 
 
 transition = 0.51
@@ -107,11 +109,11 @@ x_history = dic['x']
 # The second example
 im2 = ax2.imshow(x_history.T, aspect='auto', cmap=cmap)
 
-ax2.set_xlabel('Unit')
-ax2.set_ylabel('Time')
-ax2.set_title('Transition = ' + str(transition))
+ax2.set_xlabel('Time')
+ax2.set_ylabel('Unit')
+ax2.set_title(r'$Exc_T$ = ' + str(transition))
 ax2.xaxis.set_ticklabels([])
 ax2.yaxis.set_ticklabels([])
-ax2.grid()
+
 
 fig.savefig('./plot_producers/dynamical_range_double.eps', frameon=False, dpi=110, bbox_inches='tight')

@@ -9,10 +9,13 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 plt.rcParams["figure.figsize"] = [16, 9]
 sns.set(font_scale=3.0)
+sns.set_style(style='white')
+sns.set_style(style='white')
 
 from network import run_network_recall, train_network, run_network_recall_limit
 
 legends_instead_of_post = True
+add_max_and_min_markers = True
 
 
 fig = plt.figure(figsize=(16, 12))
@@ -63,9 +66,13 @@ for training_time in training_times_vector:
     w_inhition.append(w[pattern_from, pattern])
 
 
-ax1.plot(training_times_vector, w_transition, 'o:', color='blue', linewidth=4, markersize=13, label='Exc')
-ax1.plot(training_times_vector, w_inhition, '^-', color='red', linewidth=6, markersize=18, label='Inh')
-ax1.plot(training_times_vector, w_self, '*--', color='green', linewidth=2, markersize=15, label='Self')
+ax1.plot(training_times_vector, w_transition, 'o:', color='blue', linewidth=4, markersize=13, label=r'$Exc_T$')
+ax1.plot(training_times_vector, w_inhition, '^-', color='red', linewidth=6, markersize=18, label=r'$Inh$')
+ax1.plot(training_times_vector, w_self, '*--', color='green', linewidth=2, markersize=15, label=r'$Exc_{self}$')
+
+if add_max_and_min_markers:
+    ax1.plot(training_times_vector, np.ones(len(w_self)) * max_w, '--', color='gray', label=r'$w_{max}$')
+    ax1.plot(training_times_vector, np.ones(len(w_self)) * min_w, '--', color='gray', label=r'$w_{min}$' )
 
 ax1.axhline(0, ls='--', color='black')
 
@@ -108,6 +115,10 @@ ax2.plot(tau_w_vector, w_transition, 'o:', color='blue', linewidth=4, markersize
 ax2.plot(tau_w_vector, w_inhition, '^-', color='red', linewidth=6, markersize=18, label='Inh')
 ax2.plot(tau_w_vector, w_self, '*--', color='green', linewidth=2, markersize=15, label='Self')
 
+if add_max_and_min_markers:
+    ax2.plot(tau_w_vector, np.ones(len(w_self)) * max_w, '--', color='gray', label=r'$w_{max}$')
+    ax2.plot(tau_w_vector, np.ones(len(w_self)) * min_w, '--', color='gray', label=r'$w_{min}$')
+
 ax2.axhline(0, ls='--', color='black')
 
 ax2.set_xlabel(r'$\tau_w$')
@@ -149,6 +160,10 @@ for tau_z in tau_z_vector:
 ax3.plot(tau_z_vector, w_transition, 'o:', color='blue', linewidth=4, markersize=13, label='Exc')
 ax3.plot(tau_z_vector, w_inhition, '^-', color='red', linewidth=6, markersize=18, label='Inh')
 ax3.plot(tau_z_vector, w_self, '*--', color='green', linewidth=2, markersize=15, label='Self')
+
+if add_max_and_min_markers:
+    ax3.plot(tau_z_vector, np.ones(len(w_self)) * max_w, '--', color='gray', label=r'$w_{max}$')
+    ax3.plot(tau_z_vector, np.ones(len(w_self)) * min_w, '--', color='gray', label=r'$w_{min}$')
 
 ax3.axhline(0, ls='--', color='black')
 
@@ -234,6 +249,10 @@ ax5.plot(max_w_vector, w_transition, 'o-', color='blue', linewidth=4, markersize
 ax5.plot(max_w_vector, w_inhition, '^-', color='red', linewidth=6, markersize=18, label='Inh')
 ax5.plot(max_w_vector, w_self, '*-', color='green', linewidth=2, markersize=15, label='Self')
 
+if add_max_and_min_markers:
+    ax5.plot(max_w_vector, max_w_vector, '--', color='gray', label=r'$w_{max}$')
+    ax5.plot(max_w_vector, np.ones(len(w_self)) * min_w, '--', color='gray', label=r'$w_{min}$')
+
 ax5.axhline(0, ls='--', color='black')
 
 ax5.set_xlabel(r'$w_{max}$')
@@ -277,6 +296,10 @@ ax6.plot(min_w_vector, w_transition, 'o-', color='blue', linewidth=4, markersize
 ax6.plot(min_w_vector, w_inhition, '^-', color='red', linewidth=6, markersize=18, label='Inh')
 ax6.plot(min_w_vector, w_self, '*-', color='green', linewidth=2, markersize=15, label='Self')
 
+if add_max_and_min_markers:
+    ax6.plot(min_w_vector, np.ones(len(w_self)) * max_w, '--', color='gray', label=r'$w_{max}$')
+    ax6.plot(min_w_vector, min_w_vector, '--', color='gray', label=r'$w_{min}$')
+
 ax6.axhline(0, ls='--', color='black')
 
 ax6.set_xlabel(r'$w_{min}$')
@@ -286,7 +309,7 @@ ax6.set_xlabel(r'$w_{min}$')
 # The legends
 if legends_instead_of_post:
     handles, labels = ax1.get_legend_handles_labels()
-    fig.legend(handles=handles, labels=labels, loc=(0.70, 0.40), fancybox=True, frameon=True, fontsize=38, ncol=1)
+    fig.legend(handles=handles, labels=labels, loc=(0.58, 0.42), fancybox=True, frameon=True, fontsize=32, ncol=2)
 # Save the figure
 
 fig.savefig('./plot_producers/training_rule_quantities.eps', frameon=False, dpi=110, bbox_inches='tight')

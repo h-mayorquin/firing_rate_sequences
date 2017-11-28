@@ -141,6 +141,7 @@ def run_network_recall_limit(N, w, G, threshold, tau_m, tau_z,  T, dt, I_cue, T_
 
     return dic
 
+
 def run_network_recall_limit_end(N, w, G, threshold, tau_m, tau_z,  T, dt, I_cue, I_end, T_cue, sigma=0):
 
     x = np.zeros(N)

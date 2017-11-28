@@ -12,7 +12,7 @@ sns.set(font_scale=3.0)
 sns.set_style(style='white')
 sns.set_style(style='white')
 
-from network import run_network_recall, train_network, run_network_recall_limit
+from network import train_network, run_network_recall_limit
 
 legends_instead_of_post = True
 add_max_and_min_markers = True
@@ -38,7 +38,7 @@ sequences = [sequence1]
 epochs = 5
 pattern = 3
 pattern_from = 2
-pre_rule = True
+pre_rule = False
 
 
 # Training time
@@ -58,12 +58,13 @@ training_time = 0.100
 for training_time in training_times_vector:
 
     dic = train_network(N, dt, training_time, inter_sequence_time, sequences, tau_z,
-                        tau_z_post, tau_w, epochs=epochs, max_w=max_w, min_w=min_w, save_w_history=False, pre_rule=True)
+                        tau_z_post, tau_w, epochs=epochs, max_w=max_w, min_w=min_w, save_w_history=False, pre_rule=pre_rule)
 
     w = dic['w']
     w_self.append(w[pattern, pattern])
     w_transition.append(w[pattern, pattern_from])
     w_inhition.append(w[pattern_from, pattern])
+
 
 
 ax1.plot(training_times_vector, w_transition, 'o:', color='blue', linewidth=4, markersize=13, label=r'$Exc_T$')
@@ -104,7 +105,7 @@ sequences = [sequence1]
 for tau_w in tau_w_vector:
 
     dic = train_network(N, dt, training_time, inter_sequence_time, sequences, tau_z,
-                        tau_z_post, tau_w, epochs=5, max_w=max_w, min_w=min_w, save_w_history=False)
+                        tau_z_post, tau_w, epochs=5, max_w=max_w, min_w=min_w, save_w_history=False, pre_rule=pre_rule)
 
     w = dic['w']
     w_self.append(w[pattern, pattern])
@@ -149,7 +150,7 @@ sequences = [sequence1]
 for tau_z in tau_z_vector:
 
     dic = train_network(N, dt, training_time, inter_sequence_time, sequences, tau_z,
-                        tau_z_post, tau_w, epochs=5, max_w=max_w, min_w=min_w, save_w_history=False, pre_rule=False)
+                        tau_z_post, tau_w, epochs=5, max_w=max_w, min_w=min_w, save_w_history=False, pre_rule=pre_rule)
 
     w = dic['w']
     w_self.append(w[pattern, pattern])
@@ -196,7 +197,7 @@ if not legends_instead_of_post:
     for tau_z_post in tau_z_vector:
 
         dic = train_network(N, dt, training_time, inter_sequence_time, sequences, tau_z,
-                            tau_z_post, tau_w, epochs=5, max_w=max_w, min_w=min_w, save_w_history=False, pre_rule=True)
+                            tau_z_post, tau_w, epochs=5, max_w=max_w, min_w=min_w, save_w_history=False, pre_rule=pre_rule)
 
         w = dic['w']
         w_self.append(w[pattern, pattern])
@@ -238,7 +239,7 @@ sequences = [sequence1]
 for max_w in max_w_vector:
 
     dic = train_network(N, dt, training_time, inter_sequence_time, sequences, tau_z,
-                        tau_z_post, tau_w, epochs=5, max_w=max_w, min_w=min_w, save_w_history=False, pre_rule=True)
+                        tau_z_post, tau_w, epochs=5, max_w=max_w, min_w=min_w, save_w_history=False, pre_rule=pre_rule)
 
     w = dic['w']
     w_self.append(w[pattern, pattern])
@@ -284,7 +285,7 @@ sequences = [sequence1]
 for min_w in min_w_vector:
 
     dic = train_network(N, dt, training_time, inter_sequence_time, sequences, tau_z,
-                        tau_z_post, tau_w, epochs=5, max_w=max_w, min_w=min_w, save_w_history=False, pre_rule=True)
+                        tau_z_post, tau_w, epochs=5, max_w=max_w, min_w=min_w, save_w_history=False, pre_rule=pre_rule)
 
     w = dic['w']
     w_self.append(w[pattern, pattern])

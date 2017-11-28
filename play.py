@@ -27,15 +27,19 @@ tau_m = 0.010
 I_cue = 0
 I_end = 5
 T = 10.0
+pre_rule = False
 
 
 pattern = 3
 pattern_from = 2
 
 saved_matrix = False
-outfile = './data_training.npz'
+n_samples = 5000
+outfile = './data_training_n_samples' + str(n_samples) + 'pre_rule_' + str(pre_rule)
+extension = '.npz'
+outfile += extension
 if not saved_matrix:
-    n_samples = 10000
+
     max_w_vector = np.random.uniform(low=1, high=200, size=n_samples)
     min_w_vector = -np.random.uniform(low=1, high=100, size=n_samples)
     tau_z_vector = np.random.uniform(low=0.050, high=1.050, size=n_samples)
@@ -47,9 +51,11 @@ if not saved_matrix:
     for index, (tau_z, max_w, min_w, training_time) in enumerate(zip(tau_z_vector, max_w_vector,
                                                                      min_w_vector, training_vector)):
 
+        print(index)
+
         T_cue = tau_z
         dic = train_network(N, dt, training_time, inter_sequence_time, sequences, tau_z, tau_z_post,
-                        tau_w, epochs=epochs, max_w=max_w, min_w=min_w, save_w_history=True, pre_rule=True)
+                        tau_w, epochs=epochs, max_w=max_w, min_w=min_w, save_w_history=True, pre_rule=pre_rule)
 
         w = dic['w']
         # Extract ther recall time
@@ -74,12 +80,7 @@ if not saved_matrix:
         X[index, 2] = min_w
         X[index, 3] = training_time
 
-
-
-
-
     # Now we save both X and Y
-
     np.savez(outfile, x=X, y=y)
 else:
     npz_file = np.load(outfile)

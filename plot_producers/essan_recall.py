@@ -62,15 +62,17 @@ captions = True
 annotations = True
 
 gs = gridspec.GridSpec(3, 2)
-fig = plt.figure(figsize=(16, 12))
+fig = plt.figure(figsize=(28, 12))
 
 # Captions
 if captions:
-    size = 25
-    fig.text(0.05, 0.9, 'a)', size=size)
-    fig.text(0.05, 0.60, 'b)', size=size)
-    fig.text(0.05, 0.35, 'c)', size=size)
+    size = 35
+    aux_x = 0.08
+    fig.text(aux_x, 0.9, 'a)', size=size)
+    fig.text(aux_x, 0.60, 'b)', size=size)
+    fig.text(aux_x, 0.35, 'c)', size=size)
     fig.text(0.5, 0.90, 'd)', size=size)
+    fig.text(0.5, 0.40, 'e)', size=size)
 
 
 ax1 = fig.add_subplot(gs[0, 0])
@@ -102,16 +104,28 @@ ax1.axhline(0, ls='--', color='black')
 ax2.axhline(0, ls='--', color='black')
 ax3.axhline(0, ls='--', color='black')
 
-ax1.set_ylabel('Unit Activity')
-ax2.set_ylabel('Current')
-ax3.set_ylabel('Z-filters')
+ax1.set_xlim([-0.1, 1.8])
+ax2.set_xlim([-0.1, 1.8])
+ax3.set_xlim([-0.1, 1.8])
+
+
+if False:
+    ax1.set_xlabel('unit activities, x')
+    ax2.set_ylabel('currents')
+    ax3.set_ylabel('z-filters')
+else:
+    ax1.set_title('unit activities, x')
+    ax2.set_title(r'currents, $\Phi$ argument')
+    ax3.set_title('z-filters')
 
 ax1.get_xaxis().set_visible(False)
 ax2.get_xaxis().set_visible(False)
 ax3.set_xlabel('Time (s)')
 
 # Here we plot our connectivity matrix
-ax_conn = fig.add_subplot(gs[:2, 1])
+rect = [0.42, 0.48, 0.40, 0.40]
+# ax_conn = fig.add_subplot(gs[:2, 1])
+ax_conn = fig.add_axes(rect)
 ax_conn.grid()
 cmap = 'seismic'
 cmap = matplotlib.cm.inferno_r
@@ -119,8 +133,8 @@ cmap = matplotlib.cm.inferno_r
 # cmap = grayify_cmap(cmap)
 im = ax_conn.imshow(w, cmap=cmap)
 
-ax_conn.set_xlabel('Pre')
-ax_conn.set_ylabel('Post')
+ax_conn.set_xlabel('pre-synaptic')
+ax_conn.set_ylabel('post-synaptic')
 ax_conn.xaxis.set_ticklabels([])
 ax_conn.yaxis.set_ticklabels([])
 ax_conn.grid()
@@ -153,7 +167,7 @@ fig.colorbar(im, cax=cax, orientation='vertical')
 handles, labels = ax1.get_legend_handles_labels()
 # ax_legend.legend(ax1.get_legend_handles_labels())
 
-fig.legend(handles=handles, labels=labels, loc=(0.62, 0.07), fancybox=True, frameon=True, facecolor=(0.9, 0.9, 0.9),
+fig.legend(handles=handles, labels=labels, loc=(0.64, 0.09), fancybox=True, frameon=True, facecolor=(0.9, 0.9, 0.9),
            fontsize=28, ncol=2)
 
 # plt.show()

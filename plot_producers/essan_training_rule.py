@@ -15,6 +15,7 @@ from network import run_network_recall, train_network, run_network_recall_limit
 
 independent_labels = False  # Whehter you want an extra weight trained matrix or the labels
 captions = True
+pre_rule = False
 
 N = 10
 tau_z = 0.050
@@ -32,7 +33,7 @@ sequence1 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 sequences = [sequence1]
 
 dic = train_network(N, dt, training_time, inter_sequence_time, sequences, tau_z, tau_z_post,
-                    tau_w, epochs=epochs, max_w=max_w, min_w=min_w, save_w_history=True, pre_rule=True)
+                    tau_w, epochs=epochs, max_w=max_w, min_w=min_w, save_w_history=True, pre_rule=pre_rule)
 
 w = dic['w']
 x_total = dic['x']
@@ -41,7 +42,7 @@ z_post_history = dic['z_post']
 w_history = dic['w_history']
 
 dic = train_network(N, dt, training_time, inter_sequence_time, sequences, tau_z_1, tau_z_post,
-                    tau_w, epochs=epochs, max_w=max_w, min_w=min_w, save_w_history=True, pre_rule=True)
+                    tau_w, epochs=epochs, max_w=max_w, min_w=min_w, save_w_history=True, pre_rule=pre_rule)
 
 w1 = dic['w']
 
@@ -56,9 +57,9 @@ w_11 = w_history[:, 1, 1]
 fig = plt.figure(figsize=(16, 12))
 
 if captions:
-    size = 25
-    fig.text(0.10, 0.85, 'a)', size=size)
-    fig.text(0.55, 0.85, 'b)', size=size)
+    size = 35
+    fig.text(0.10, 0.86, 'a)', size=size)
+    fig.text(0.53, 0.86, 'b)', size=size)
     fig.text(0.10, 0.48, 'c)', size=size)
 
 
@@ -80,8 +81,8 @@ cax = divider.append_axes('right', size='5%', pad=0.05)
 fig.colorbar(im, cax=cax)
 
 ax1.set_title(r'$\tau_z$ = ' + str(tau_z))
-ax1.set_xlabel('Pre')
-ax1.set_ylabel('Post')
+ax1.set_xlabel('pre-synaptic')
+ax1.set_ylabel('post-synaptic')
 ax1.xaxis.set_ticklabels([])
 ax1.yaxis.set_ticklabels([])
 
@@ -94,8 +95,8 @@ if not independent_labels:
     fig.colorbar(im3, cax=cax)
 
     ax3.set_title(r'$\tau_z$ = ' + str(tau_z_1))
-    ax3.set_xlabel('Pre')
-    ax3.set_ylabel('Post')
+    ax3.set_xlabel('pre-synaptic')
+    ax3.set_ylabel('post-synaptic')
     ax3.xaxis.set_ticklabels([])
     ax3.yaxis.set_ticklabels([])
 
@@ -106,18 +107,21 @@ if independent_labels:
 
 # The epochs plot
 ax2.plot(time, w_10,  ':', color='blue', markersize=1, linewidth=2, label=r'$Exc_T$')
-ax2.plot(time, w_01, '-', color='red',  markersize=1, linewidth=4, label=r'$Inh$')
+ax2.plot(time, 3 * w_01, '-', color='red',  markersize=1, linewidth=4, label=r'$Inh$')
 ax2.plot(time, w_11, '--', color='green', markersize=1, linewidth=6, label=r'$Exc_{self}$')
 
 tick_spacing = 2
 labels = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
 ticks =  [0, 2,    4,   6,   8,   10,  12,  14, 16,  18, 20]
+ticks = [0 , 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
-plt.xticks(ticks, labels)
+# plt.xticks(ticks, labels)
+ax2.set_xlim([0, 10])
+ax2.set_ylim([-12, 23])
 
 
-ax2.set_xlabel('Epochs')
-ax2.set_ylabel('Weight')
+ax2.set_xlabel('Time (s)')
+ax2.set_ylabel('Weight, w')
 # ax2.set_xlim([-1, 25])
 
 if not independent_labels:

@@ -109,14 +109,13 @@ ax2.set_xlim([-0.1, 1.8])
 ax3.set_xlim([-0.1, 1.8])
 
 
-if False:
-    ax1.set_xlabel('unit activities, x')
-    ax2.set_ylabel('currents')
-    ax3.set_ylabel('z-filters')
-else:
-    ax1.set_title('unit activities, x')
-    ax2.set_title(r'currents, $\Phi$ argument')
-    ax3.set_title('z-filters')
+ax1.set_ylabel('x')
+ax2.set_ylabel('currents')
+ax3.set_ylabel('z')
+
+ax1.set_title('unit activities')
+ax2.set_title(r'$\Phi$ argument')
+ax3.set_title('z-filters')
 
 ax1.get_xaxis().set_visible(False)
 ax2.get_xaxis().set_visible(False)

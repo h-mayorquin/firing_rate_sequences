@@ -38,21 +38,24 @@ transition_vector_1 = np.logspace(-14, -0.3, 20) + 0.5
 transition_vector = np.hstack((transition_vector_1, transition_vector_2))
 transition_vector.sort()
 
-recall_times = []
-for transition in transition_vector:
-    w = designed_matrix_sequences(N, sequences, self_excitation=self_excitation, transition=transition,
-                              inhibition=inhibition)
+if True:
+    recall_times = []
+    for transition in transition_vector:
+        w = designed_matrix_sequences(N, sequences, self_excitation=self_excitation, transition=transition,
+                                  inhibition=inhibition)
 
-    dic = run_network_recall_limit(N, w, G, threshold, tau_m, tau_z,  T, dt, I_cue, T_cue)
-    x_history = dic['x']
-    duration = get_recall_duration_for_pattern(x_history, pattern, dt)
-    recall_times.append(duration)
+        dic = run_network_recall_limit(N, w, G, threshold, tau_m, tau_z,  T, dt, I_cue, T_cue)
+        x_history = dic['x']
+        duration = get_recall_duration_for_pattern(x_history, pattern, dt)
+        recall_times.append(duration)
 
-
+else:
+    recall_times =transition_vector
 # The figure
 time_t1_recall = time_t1(tau_z, T=transition_vector, I=inhibition, threshold=threshold)
 
 captions = True
+show_units = True
 
 fig = plt.figure()
 gs = gridspec.GridSpec(2, 2)
@@ -64,8 +67,8 @@ ax2 = fig.add_subplot(gs[1, 1])
 if captions:
     size = 30
     fig.text(0.05, 0.95, 'a)', size=size)
-    fig.text(0.55, 0.95, 'b)', size=size)
-    fig.text(0.55, 0.50, 'c)', size=size)
+    fig.text(0.50, 0.95, 'b)', size=size)
+    fig.text(0.50, 0.50, 'c)', size=size)
 
 plt.tight_layout()
 
@@ -75,7 +78,7 @@ ax.plot(transition_vector, time_t1_recall, label='theoretical')
 ax.axhline(0, ls='--', color='black')
 ax.axvline(threshold, ls=':', color='grey', label=r'threshold $\theta$')
 
-ax.set_title('Dynamical Range')
+# ax.set_title('Dynamical Range')
 ax.set_xlabel(r'$Exc_T$')
 ax.set_ylabel('Recall time (s)')
 
@@ -89,20 +92,23 @@ cmap = matplotlib.cm.binary
 # The first example
 T = 8.25
 transition = 1.0
+time = np.arange(0, T, dt)
 
 w = designed_matrix_sequences(N, sequences, self_excitation=self_excitation, transition=transition,
                               inhibition=inhibition)
 dic = run_network_recall_limit(N, w, G, threshold, tau_m, tau_z, T, dt, I_cue, T_cue)
 x_history = dic['x']
 
+extent = [0, 7.5, 0, 10]
+im1 = ax1.imshow(x_history.T, aspect='auto', cmap=cmap, extent=extent, origin='lower')
 
-im1 = ax1.imshow(x_history.T, aspect='auto', cmap=cmap)
-
-ax1.set_xlabel('Time')
-ax1.set_ylabel('Unit')
+# ax1.set_xlabel('Time (s)')
+ax1.set_ylabel('Unit id')
 ax1.set_title(r'$Exc_T$ = ' + str(transition))
-ax1.xaxis.set_ticklabels([])
-ax1.yaxis.set_ticklabels([])
+
+if not show_units:
+    ax1.xaxis.set_ticklabels([])
+    ax1.yaxis.set_ticklabels([])
 
 transition = 0.51
 w = designed_matrix_sequences(N, sequences, self_excitation=self_excitation, transition=transition,
@@ -111,13 +117,26 @@ dic = run_network_recall_limit(N, w, G, threshold, tau_m, tau_z, T, dt, I_cue, T
 x_history = dic['x']
 
 # The second example
-im2 = ax2.imshow(x_history.T, aspect='auto', cmap=cmap)
+im2 = ax2.imshow(x_history.T, aspect='auto', cmap=cmap, extent=extent, origin='lower')
 
-ax2.set_xlabel('Time')
-ax2.set_ylabel('Unit')
+ax2.set_xlabel('Time (s)')
+ax2.set_ylabel('Unit id')
 ax2.set_title(r'$Exc_T$ = ' + str(transition))
-ax2.xaxis.set_ticklabels([])
-ax2.yaxis.set_ticklabels([])
 
+if not show_units:
+    ax2.xaxis.set_ticklabels([])
+    ax2.yaxis.set_ticklabels([])
+
+# Let's annotate recall time
+props = dict(arrowstyle="wedge,tail_width=0.7",
+                            fc="0.6", ec="none",
+                            patchB=None,
+                            connectionstyle="arc3,rad=+0.3")
+ax2.annotate('recall time',
+            xy=(1.9, 5), xycoords='data',
+            xytext=(2.0, 1.5),  size=20, color='black',
+            arrowprops=dict(arrowstyle="simple", color='red',
+                            connectionstyle="arc3,rad=-0.3"))
 
 fig.savefig('./plot_producers/dynamical_range.eps', frameon=False, dpi=110, bbox_inches='tight')
+plt.close()

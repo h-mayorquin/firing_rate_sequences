@@ -38,9 +38,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="5.6"
-     inkscape:cx="182.82039"
-     inkscape:cy="916.92335"
+     inkscape:zoom="3.959798"
+     inkscape:cx="190.2758"
+     inkscape:cy="935.33424"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -296,25 +296,25 @@
     <text
        xml:space="preserve"
        style="font-size:9px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="240"
+       x="230"
        y="82.362183"
        id="text3053"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan3055"
-         x="240"
-         y="82.362183">pre-synaptic dw = 0</tspan></text>
+         x="230"
+         y="82.362183">i)  pre-synaptic rule dw = 0</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:9px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="235"
+       x="225"
        y="92.362183"
        id="text3057"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan3059"
-         x="235"
-         y="92.362183">post-synaptic dw &lt; 0</tspan></text>
+         x="225"
+         y="92.362183">ii) post-synaptic rule dw &lt; 0</tspan></text>
     <flowRoot
        xml:space="preserve"
        id="flowRoot3061"
@@ -328,25 +328,25 @@
          id="flowPara3067" /></flowRoot>    <text
        xml:space="preserve"
        style="font-size:9px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="90"
+       x="70"
        y="172.36218"
        id="text3053-3"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan3055-6"
-         x="90"
-         y="172.36218">pre-synaptic dw &lt; 0</tspan></text>
+         x="70"
+         y="172.36218">i)  pre-synaptic rule dw &lt; 0</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:9px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="85"
+       x="65"
        y="182.36218"
        id="text3057-7"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan3059-5"
-         x="85"
-         y="182.36218">post-synaptic dw = 0</tspan></text>
+         x="65"
+         y="182.36218">ii) post-synaptic rule dw = 0</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:9px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"

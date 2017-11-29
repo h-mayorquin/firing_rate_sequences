@@ -58,16 +58,24 @@ x_history = dic['x']
 z_history = dic['z']
 current_history = dic['current']
 
+captions = True
+annotations = True
+
 gs = gridspec.GridSpec(3, 2)
 fig = plt.figure(figsize=(16, 12))
+
+# Captions
+if captions:
+    size = 25
+    fig.text(0.05, 0.9, 'a)', size=size)
+    fig.text(0.05, 0.60, 'b)', size=size)
+    fig.text(0.05, 0.35, 'c)', size=size)
+    fig.text(0.5, 0.90, 'd)', size=size)
+
 
 ax1 = fig.add_subplot(gs[0, 0])
 ax2 = fig.add_subplot(gs[1, 0])
 ax3 = fig.add_subplot(gs[2, 0])
-
-ax1.grid()
-ax2.grid()
-ax3.grid()
 
 patterns = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 # patterns = sequence
@@ -76,7 +84,7 @@ norm = matplotlib.colors.Normalize(0, N)
 cmap = matplotlib.cm.inferno_r
 
 for pattern in patterns:
-    width = pattern * 0.5 + 0.5
+    width = 10.0 - pattern * 1.0
     if pattern == 0:
         label = 'Cue'
     else:
@@ -86,9 +94,6 @@ for pattern in patterns:
     ax2.plot(time, current_history[:, pattern], color=cmap(norm(pattern)), linewidth=width, label='x' + label)
     ax3.plot(time, z_history[:, pattern], color=cmap(norm(pattern)), linewidth=width, label='x' + label)
 
-ax1.grid()
-ax2.grid()
-ax3.grid()
 
 ax1.set_ylim([-0.1, 1.1])
 ax3.set_ylim([-0.1, 1.1])
@@ -122,6 +127,17 @@ ax_conn.grid()
 
 divider = make_axes_locatable(ax_conn)
 cax = divider.append_axes('right', size='5%', pad=0.05)
+
+if annotations:
+    ax_conn.annotate(r'$Exc_{T}$', xy=(0, 1), xytext=(0, 5),
+                     arrowprops=dict(facecolor='red', shrink=0.15))
+
+    ax_conn.annotate(r'$Inh$', xy=(1.0, 0), xytext=(4, -1),
+                arrowprops=dict(facecolor='red', shrink=0.05))
+
+    ax_conn.annotate(r'$Exc_{self}$', xy=(3.5, 3), xytext=(6, 2.5),
+                arrowprops=dict(facecolor='red', shrink=0.05))
+
 
 # Let's define our own color map
 # cmap = matplotlib.colors.ListedColormap([cmap(0), cmap(1), cmap(2)])

@@ -52,7 +52,7 @@ for transition in transition_vector:
 # The figure
 time_t1_recall = time_t1(tau_z, T=transition_vector, I=inhibition, threshold=threshold)
 
-
+captions = True
 
 fig = plt.figure()
 gs = gridspec.GridSpec(2, 2)
@@ -61,13 +61,19 @@ ax = fig.add_subplot(gs[:, 0])
 ax1 = fig.add_subplot(gs[0, 1])
 ax2 = fig.add_subplot(gs[1, 1])
 
+if captions:
+    size = 30
+    fig.text(0.05, 0.95, 'a)', size=size)
+    fig.text(0.55, 0.95, 'b)', size=size)
+    fig.text(0.55, 0.50, 'c)', size=size)
+
 plt.tight_layout()
 
 ax.plot(transition_vector, recall_times, '*', markersize=15, label='recall time')
 ax.plot(transition_vector, time_t1_recall, label='theoretical')
 
 ax.axhline(0, ls='--', color='black')
-ax.axvline(threshold, ls=':', color='grey', label='threshold')
+ax.axvline(threshold, ls=':', color='grey', label=r'threshold $\theta$')
 
 ax.set_title('Dynamical Range')
 ax.set_xlabel(r'$Exc_T$')
@@ -98,8 +104,6 @@ ax1.set_title(r'$Exc_T$ = ' + str(transition))
 ax1.xaxis.set_ticklabels([])
 ax1.yaxis.set_ticklabels([])
 
-
-
 transition = 0.51
 w = designed_matrix_sequences(N, sequences, self_excitation=self_excitation, transition=transition,
                               inhibition=inhibition)
@@ -116,4 +120,4 @@ ax2.xaxis.set_ticklabels([])
 ax2.yaxis.set_ticklabels([])
 
 
-fig.savefig('./plot_producers/dynamical_range_double.eps', frameon=False, dpi=110, bbox_inches='tight')
+fig.savefig('./plot_producers/dynamical_range.eps', frameon=False, dpi=110, bbox_inches='tight')

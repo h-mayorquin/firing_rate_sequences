@@ -86,39 +86,61 @@ This is a sample file. Please use this file to correctly typeset a
 submission to the ESANN conference. The associated pdf file will
 help you to have an idea of what your paper should look like.
 
-\section{The neural network}
+\section{Methods}
+The neural network is composed of firing rate units with the following properties. First the individual units receive current from all the other units, that is, the system is a recurrently connected neural network with all-to-all connectivity. All the neurons send current to each other and the accumulated current is then  thresholded $\theta$ by the logistic function $\Phi(x) = \frac{1}{1 + \exp(-Gx)}$. This whole process is condensed into equation \ref{eq1}. The current then is integrated with a time constant $\tau_m$, the integration time of the unit, to determine the activation of the unit. In order to account for the temporal effects we introduce the idea of z-filters that keep information about the activity during a time period $\tau_z$. We can see in equation \ref{eq2} that the filter z follows the activity of the unit at any point in time.
 
 \begin{align}
-\tau_m \dfrac{dx}{dt} &= \Phi(wx - \theta) \\
-\tau_z \dfrac{dz}{dt} &= x - z
+\tau_m \dfrac{dx_i}{dt} &= \Phi\Big(\sum_{j} W_{ij} z_j - \theta \Big) - x_i \label{eq1} \\ 
+\tau_z \dfrac{dz_i}{dt} &= x_i - z_i \label{eq2}
 \end{align}
+
+This system allows for the units to keep influencing the other units through $W$ even when they are not active anymore. We will see how this is fundamental for the sequence processing capabilities of our system. 
+
+The connectivity of the system is as depicted in figure \ref{Fig:diagram}. Note that that from each unit emanate two excitatory connections, one that self-reinforces the unit activity $Exc_{self}$ and another that excites the following neuron (contributing to the sequential structure of the activity) $Exc_T$. At the same time every unit inhibits all the units except the next one with $Inh$. Of special relevance are the backwards inhibitory projections that suppress the unit once the next unit in the sequence is activated 
 
 \begin{figure}[h!]
 \centering
 \includegraphics[scale=1.5]{diagram.eps}
-\caption{The connectivity}\label{Fig:diagram}
+\caption{In this diagram we can appreciate the overall connectivity of the system. Note that the inhibitory connections are only fully depicted for the first unit for the sake of clarity.}\label{Fig:diagram}
 \end{figure}
 
+ 
+\section{Results}
 
-\subsection{A recall example}
+\subsection{The neural network can sustain sequential activity}
+
+In order to recall a particular sequence we cue the first element. This means that we artificially activate the first unit (clamping) of the sequence for a short time. After this initial cue, if the weights are set right, the neural network continues evolving on its own and a particular sequence is recalled. In figure \ref{Fig:recall} we can appreciate a successful recall of a sequence. 
 
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=0.25]{recall.eps}
-\caption{A recall example}\label{Fig:recall}
+\includegraphics[scale=0.20]{recall.eps}
+\caption{A succesful recall. a) The activity of the units as it evolves in time. b) The currents that each unit receives as the sequence progresses. c) the z-filters activations for each unit. d) The connectivity matrix $W$. The weights of the matrix can be divided on the excitatory connections: the ones that induce transitions $Exc_{T}$ and the ones that stabilize the unit $Exc_{self}$ and the inhibitory connections $Inh$.}\label{Fig:recall}
 \end{figure}
 
+%It is important to note that the weights of the connectivity matrix determine the particular behavior that the network will develop. In the diagonal of the connectivity matrix we have the weights of the excitation connections that keep the unit active once it already became activited $Exc_{self}$. That is, they sustain a positive feed-back loop that keeps the unit active. Below the diagonal, on the other hand, we have the weights of the connections that make the sequence transition from one state to the next $Exc_{T}$. Finally, the rest of the matrix consists of the weights for the inhibitory connections. Of special significance are the backward inhibitory projections above the diagonal, their role is to suppress the last pattern of the sequence once the next unit is activated. 
 
-\section{Dynamic Range}
+It is now instructive to detail at the level of the dynamics how the sequential activity is propagated. After the first unit $x_1$ has been activated for long enough due to clamping the filter $z_1$ will start catching up with the activity by increasing its value. When this happens the unit corresponding to $x_2$ will receive a growing current with value $Exc_{T} \times z_1$. As this process continues there will a point in time (exactly at $Exc_{T}(1 - e^{-\frac{t}{\tau_z}}) - \theta = 0$) when $x_2$ will receive enough current to become activated. This, will again will prompt the filter $z_2$ to start catching up initializing the process described again. On the other hand as soon as the second filter starts growing $z_2$ the first unit will start receiving an inhibitory current $Inh \times z_2$ due to the backward inhibitory projection, this will in turn suppress the unit $x_1$ allowing the sequence to propagate. Finally, once the unit $x_1$ is finally suppressed the excitatory current mediated by $Exc_T$ will be diminished which in most cases would also suppress the activity of $x_2$ if were not for the self-sustaining current $Exc_{self} \times z_2$. In short, the term $Exc_T$ ensures the transition of the activity from one unit of the sequence to the next whereas the competition between $Exc_{self}$ and $Inh$ first lock the pattern unit and then finally suppress it allowing the sequence to evolve towards its end without hindrance.
+
+With the knowledge above in mind we can envision the following  failure scenarios for the sequential dynamics. First, if the magnitude of $Exc_{self}$ the activity will not be big enough to overcome the threshold and the sequence will not propagate. Second, if $Exc_{Self}$ is enough to keep the unit active but $Exc_{T}$ is not big enough the next unit in the sequence will not be activated and the sequence will not propagate. If both $Exc_{self}$ is big enough to sustain the activity and $Exc_{T}$ is big enough to propagate it but the inhibitory connection $Inh$ is not enough to suppress the units the result will be that all the units in the sequence will be activated at the end. 
+
+
+\subsection{The neural network possess a wide dynamic range}
+
+A common problem in sequence learning is to scale the time duration of the sequence according to the needs of the required context. In terms of a neural network it means that once the dynamics of sequence recalling are stored in the shape of the weights we can control the \textit{recall time} of the sequence with the internal parameters of the network where the recall time is the amount of time that a particular unit is active during a sequence recall. In our network there are a two parameters that a priori are strong candidates to regulate the recall time: the transition weight $Exc_T$ by controlling how fast you activate the next unit in the sequence and the threshold $\theta$ by controlling how long it takes for the current to activate the next unit in a sequence. Here we show the exact results for $Exc_T$ but the reasoning for $\theta$ is analogous.  
+
+In order to calculate the recall time we make the following consideration. Once the unit $x_1$ becomes activated the filter $z_1$ starts increasing its value and the unit $x_2$ will be receiving an excitatory current $Exc_T \times z_1$. The point in time t at which the this current overcomes the threshold will be the recall time. Using that reasoning we can solve the following equation to calculate the recall time: $Exc_{T}(1 - e^{-\frac{t}{\tau_z}}) - \theta = 0$. If we do we end up with the following expression: $T_{recall} = \tau_z \log(\frac{Exc_T}{Exc_T - \theta})$. This expression tells us that we actually have a singularity at $Exc_T = \theta$, which for our purposes means that can make the recall time arbitrarily by setting this two parameters close enough. We can see an illustration of that in \ref{Fig:dynamical_range} where we also show two examples of sequence recall with different $Exc_T$ values and therefore with different recall times. 
+
+
+
 \begin{figure}[h!]
 \centering
 \includegraphics[scale=0.25]{dynamical_range.eps}
-\caption{The dynamica range}\label{Fig:dynamical_range}
+\caption{The dynami}\label{Fig:dynamical_range}
 \end{figure}
 
 
 
-\section{Learning Rule}
+\subsection{Learning Rule}
 
 \begin{align}
 \tau_w \dfrac{dw}{dt} &= (w_{max} - w) z_{pre}z_{post} + (w_{min} - w) (z_{post} - 1)z_{pre} 
@@ -146,11 +168,12 @@ help you to have an idea of what your paper should look like.
 
 \textbf{Training time}
 \begin{itemize}
-\item  $Exc_{self}$: The longer the training time the longer the filter is activated with itself and therefore it grows. However
-\item  $Inh$: W  
-\end{itemize}
-
-\section{Disambiguation}
+\item  $Exc_{self}$: The longer the training time the longer the filter is activated with itself and therefore it grows. But given that the pre and post filters do not coincide completely in the temporal domain there are negative contributions which prevent this from reaching the saturation value $w_{max}$
+\item  $Inh$: In this case the the negative contributions come from the time that the units are not activated together with their counterparts which is most of the time (except in the brief transition period) and therefore the value saturates quickly to $w_{min}$.
+\item $Exc_{T}$: In this case what matters is the transition time between two 
+\end{itemize} 
+ 
+\subsection{Disambiguation}
 
 
 \section{Discussion}
@@ -166,39 +189,12 @@ file.
 
 \begin{footnotesize}
 
-% IF YOU DO NOT USE BIBTEX, USE THE FOLLOWING SAMPLE SCHEME FOR THE REFERENCES
-% ----------------------------------------------------------------------------
-\begin{thebibliography}{99}
-
-% For books
-\bibitem{Haykin_book} S. Haykin, editor. \emph{Unsupervised Adaptive Filtering vol.1 : Blind Source Separation}, John Willey ans Sons, New York, 2000.
-
-% For articles
-\bibitem{DelfosseLoubaton_article}N. Delfosse and P. Loubaton, Adaptibe blind separation of sources: A deflation
-approach, \emph{Signal Processing}, 45:59-83, Elsevier, 1995.
-
-% For paper in proceedings published as serie books (LNCS,...)
-\bibitem{CrucCichAmari_bookproceedings} S. Cruces, A. Cichocki and S. Amari, The minimum entropy and cumulants based contrast functions for blind source extraction. In J. Mira and A. Prieto, editors, proceedings of the 6$^{th}$ \emph{international workshop on artificial neural networks} ({IWANN} 2001), Lecture Notes in Computer Science 2085, pages 786-793,
-Springer-Verlag, 2001.
-
-% For paper in conference proceedings
-\bibitem{VrinsArchambeau_proceedings} F. Vrins, C. Archambeau and M. Verleysen, Towards a local separation performances estimator using common ICA contrast functions? In M. Verleysen, editor, \emph{proceedings of the $12^{th}$
-European Symposium on Artificial Neural Networks} ({ESANN} 2004),
-d-side pub., pages 211-216, April 28-30, Bruges (Belgium), 2004.
-
-% For Technical Report
-\bibitem{Stone_TechRep} J. V. Stone and J. Porrill, Undercomplete independent component analysis for signal separation and dimension
-reduction. Technical Report, Psychology Department, Sheffield
-University, Sheffield, S10 2UR, England, October 1997.
-\end{thebibliography}
-% ----------------------------------------------------------------------------
-
 % IF YOU USE BIBTEX,
 % - DELETE THE TEXT BETWEEN THE TWO ABOVE DASHED LINES
 % - UNCOMMENT THE NEXT TWO LINES AND REPLACE 'Name_Of_Your_BibFile'
 
-%\bibliographystyle{unsrt}
-%\bibliography{Name_Of_Your_BibFile}
+\bibliographystyle{unsrt}
+\bibliography{references.bib}
 
 \end{footnotesize}
 

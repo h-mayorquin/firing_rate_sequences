@@ -16,6 +16,8 @@ from network import train_network, run_network_recall_limit
 
 legends_instead_of_post = True
 add_max_and_min_markers = True
+captions = True
+pre_rule = True
 
 
 fig = plt.figure(figsize=(16, 12))
@@ -26,6 +28,15 @@ if not legends_instead_of_post:
     ax4 = fig.add_subplot(324)
 ax5 = fig.add_subplot(325)
 ax6 = fig.add_subplot(326)
+
+if captions:
+    size = 25
+    fig.text(0.05, 0.97, 'a)', size=size)
+    fig.text(0.50, 0.97, 'b)', size=size)
+    fig.text(0.05, 0.65, 'c)', size=size)
+    fig.text(0.05, 0.32, 'd)', size=size)
+    fig.text(0.50, 0.32, 'f)', size=size)
+
 
 plt.tight_layout()
 
@@ -38,7 +49,7 @@ sequences = [sequence1]
 epochs = 5
 pattern = 3
 pattern_from = 2
-pre_rule = False
+
 
 
 # Training time
@@ -96,7 +107,7 @@ tau_w = 0.100
 max_w = 10.0
 min_w = -3.0
 
-training_time = 0.100
+training_time = 0.300
 inter_sequence_time = 1.000
 dt = 0.001
 sequence1 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
@@ -141,7 +152,7 @@ tau_w = 0.100
 max_w = 80.0
 min_w = -50.0
 
-training_time = 0.350
+training_time = 0.500
 inter_sequence_time = 1.000
 dt = 0.001
 sequence1 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
@@ -182,7 +193,7 @@ if not legends_instead_of_post:
     pattern_from = 2
 
     N = 10
-    tau_z = 0.300
+    tau_z = 0.500
     tau_z_post = 0.005
     tau_w = 0.100
     max_w = 100.0
@@ -230,7 +241,7 @@ tau_w = 0.100
 max_w = 30.0
 min_w = -3.0
 
-training_time = 0.100
+training_time = 0.500
 inter_sequence_time = 1.000
 dt = 0.001
 sequence1 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
@@ -276,7 +287,7 @@ tau_w = 0.100
 max_w = 30.0
 min_w = -3.0
 
-training_time = 0.100
+training_time = 0.500
 inter_sequence_time = 1.000
 dt = 0.001
 sequence1 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
@@ -312,7 +323,7 @@ if legends_instead_of_post:
     handles, labels = ax1.get_legend_handles_labels()
     fig.legend(handles=handles, labels=labels, loc=(0.58, 0.42), fancybox=True, frameon=True, fontsize=32, ncol=2)
 # Save the figure
-
-fig.savefig('./plot_producers/training_rule_quantities.eps', frameon=False, dpi=110, bbox_inches='tight')
-
+name = './plot_producers/training_rule_quantities_pre_rule_' + str(pre_rule) + '.eps'
+fig.savefig(name, frameon=False, dpi=110, bbox_inches='tight')
+plt.close()
 

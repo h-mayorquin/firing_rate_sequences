@@ -14,7 +14,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="plasticity_diagram.eps">
+   sodipodi:docname="plasticity_diagram.svg">
   <defs
      id="defs4">
     <marker
@@ -38,9 +38,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="3.959798"
-     inkscape:cx="182.22277"
-     inkscape:cy="971.87454"
+     inkscape:zoom="5.6"
+     inkscape:cx="182.82039"
+     inkscape:cy="916.92335"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -61,7 +61,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -120,13 +120,13 @@
        xml:space="preserve"
        style="font-size:9px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
        x="120"
-       y="72.362183"
+       y="87.362183"
        id="text4431"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan4433"
          x="120"
-         y="72.362183">dw + </tspan></text>
+         y="87.362183">dw &gt; 0 </tspan></text>
     <path
        sodipodi:nodetypes="cc"
        inkscape:connector-curvature="0"
@@ -175,20 +175,9 @@
            height="12.374369"
            width="27.14785"
            id="rect4472" /></flowRegion><flowPara
-         id="flowPara4474">post</flowPara></flowRoot>    <text
-       sodipodi:linespacing="125%"
-       id="text4476"
-       y="72.362183"
-       x="280"
-       style="font-size:9px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       xml:space="preserve"><tspan
-         y="72.362183"
-         x="280"
-         id="tspan4478"
-         sodipodi:role="line">dw 0 </tspan></text>
-    <path
+         id="flowPara4474">post</flowPara></flowRoot>    <path
        style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:none;marker-end:url(#SemiCircleIn)"
-       d="m 265,117.36218 c 0,0 30,-24.999997 50,-5"
+       d="m 265,127.36218 c 0,0 30,-25 50,-5"
        id="path4506"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc" />
@@ -201,9 +190,9 @@
        sodipodi:rx="22.5"
        sodipodi:ry="20"
        d="m 110,77.362183 a 22.5,20 0 1 1 -45,0 22.5,20 0 1 1 45,0 z"
-       transform="matrix(0.87934289,0,0,1,172.3884,51.210653)" />
+       transform="matrix(0.87934289,0,0,1,172.3884,61.210653)" />
     <path
-       transform="matrix(0.87934289,0,0,1,252.3884,51.210653)"
+       transform="matrix(0.87934289,0,0,1,252.3884,61.210653)"
        d="m 110,77.362183 a 22.5,20 0 1 1 -45,0 22.5,20 0 1 1 45,0 z"
        sodipodi:ry="20"
        sodipodi:rx="22.5"
@@ -213,7 +202,7 @@
        style="fill:#f9f9f9;stroke:#000000;stroke-width:0.53320092;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
        sodipodi:type="arc" />
     <flowRoot
-       transform="translate(160,80)"
+       transform="translate(160,90)"
        xml:space="preserve"
        id="flowRoot4512"
        style="font-size:9px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"><flowRegion
@@ -224,7 +213,7 @@
            x="77.781746"
            y="8.369525" /></flowRegion><flowPara
          id="flowPara4518">pre</flowPara></flowRoot>    <flowRoot
-       transform="translate(247.21875,80.01644)"
+       transform="translate(247.21875,90.01644)"
        xml:space="preserve"
        id="flowRoot4520"
        style="font-size:9px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"><flowRegion
@@ -237,29 +226,29 @@
          id="flowPara4526">post</flowPara></flowRoot>    <text
        xml:space="preserve"
        style="font-size:9px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="280"
-       y="152.36218"
+       x="275"
+       y="177.36218"
        id="text4528"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
-         x="280"
-         y="152.36218"
-         id="tspan4596">dw 0 </tspan></text>
+         x="275"
+         y="177.36218"
+         id="tspan4596">dw = 0 </tspan></text>
     <path
        sodipodi:nodetypes="cc"
        inkscape:connector-curvature="0"
        id="path4532"
-       d="m 105,117.36218 c 0,0 30,-24.999997 50,-5"
+       d="m 105,127.36218 c 0,0 30,-25 50,-5"
        style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:none;marker-end:url(#SemiCircleIn)" />
     <path
-       transform="matrix(0.87934289,0,0,1,12.388399,51.210653)"
+       transform="matrix(0.87934289,0,0,1,12.388399,61.210653)"
        d="m 110,77.362183 a 22.5,20 0 1 1 -45,0 22.5,20 0 1 1 45,0 z"
        sodipodi:ry="20"
        sodipodi:rx="22.5"
        sodipodi:cy="77.362183"
        sodipodi:cx="87.5"
        id="path4534"
-       style="fill:#000000;stroke:#000000;stroke-width:0.53320091999999997;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       style="fill:#000000;stroke:#000000;stroke-width:0.53320092;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
        sodipodi:type="arc" />
     <path
        sodipodi:type="arc"
@@ -270,12 +259,12 @@
        sodipodi:rx="22.5"
        sodipodi:ry="20"
        d="m 110,77.362183 a 22.5,20 0 1 1 -45,0 22.5,20 0 1 1 45,0 z"
-       transform="matrix(0.87934289,0,0,1,92.388399,51.210653)" />
+       transform="matrix(0.87934289,0,0,1,92.388399,61.210653)" />
     <flowRoot
        style="font-size:9px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
        id="flowRoot4538"
        xml:space="preserve"
-       transform="translate(0,80)"><flowRegion
+       transform="translate(0,90)"><flowRegion
          id="flowRegion4540"><rect
            y="8.369525"
            x="77.781746"
@@ -286,7 +275,7 @@
        style="font-size:9px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
        id="flowRoot4546"
        xml:space="preserve"
-       transform="translate(87.21875,80.01644)"><flowRegion
+       transform="translate(87.21875,90.01644)"><flowRegion
          id="flowRegion4548"><rect
            y="8.369525"
            x="77.781746"
@@ -294,15 +283,113 @@
            width="27.14785"
            id="rect4550" /></flowRegion><flowPara
          id="flowPara4552">post</flowPara></flowRoot>    <text
+       xml:space="preserve"
+       style="font-size:9px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="253.04321"
+       y="77.059906"
+       id="text3049"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3051"
+         x="253.04321"
+         y="77.059906" /></text>
+    <text
+       xml:space="preserve"
+       style="font-size:9px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="240"
+       y="82.362183"
+       id="text3053"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3055"
+         x="240"
+         y="82.362183">pre-synaptic dw = 0</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:9px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="235"
+       y="92.362183"
+       id="text3057"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3059"
+         x="235"
+         y="92.362183">post-synaptic dw &lt; 0</tspan></text>
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot3061"
+       style="fill:black;stroke:none;stroke-opacity:1;stroke-width:1px;stroke-linejoin:miter;stroke-linecap:butt;fill-opacity:1;font-family:Sans;font-style:normal;font-weight:normal;font-size:9px;line-height:125%;letter-spacing:0px;word-spacing:0px"><flowRegion
+         id="flowRegion3063"><rect
+           id="rect3065"
+           width="317.94553"
+           height="88.135811"
+           x="47.982246"
+           y="90.696968" /></flowRegion><flowPara
+         id="flowPara3067" /></flowRoot>    <text
+       xml:space="preserve"
+       style="font-size:9px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="90"
+       y="172.36218"
+       id="text3053-3"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3055-6"
+         x="90"
+         y="172.36218">pre-synaptic dw &lt; 0</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:9px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="85"
+       y="182.36218"
+       id="text3057-7"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3059-5"
+         x="85"
+         y="182.36218">post-synaptic dw = 0</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:9px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="65"
+       y="27.362183"
+       id="text3115"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3117"
+         x="65"
+         y="27.362183">a)</tspan></text>
+    <text
        sodipodi:linespacing="125%"
-       id="text4554"
-       y="152.36218"
-       x="120"
+       id="text3119"
+       y="27.362183"
+       x="215"
        style="font-size:9px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
        xml:space="preserve"><tspan
-         y="152.36218"
-         x="120"
-         id="tspan4556"
-         sodipodi:role="line">dw - </tspan></text>
+         y="27.362183"
+         x="215"
+         id="tspan3121"
+         sodipodi:role="line">b)</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:9px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="215"
+       y="127.36218"
+       id="text3127"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3129"
+         x="215"
+         y="127.36218">d)</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text3131"
+       y="127.36218"
+       x="65"
+       style="font-size:9px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       xml:space="preserve"><tspan
+         y="127.36218"
+         x="65"
+         id="tspan3133"
+         sodipodi:role="line">c)</tspan></text>
   </g>
 </svg>

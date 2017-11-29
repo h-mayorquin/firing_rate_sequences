@@ -87,14 +87,14 @@ submission to the ESANN conference. The associated pdf file will
 help you to have an idea of what your paper should look like.
 
 \section{Methods}
-The neural network is composed of firing rate units with the following properties. First the individual units receive current from all the other units, that is, the system is a recurrently connected neural network with all-to-all connectivity. All the neurons send current to each other and the accumulated current is then  thresholded $\theta$ by the logistic function $\Phi(x) = \frac{1}{1 + \exp(-Gx)}$. This whole process is condensed into equation \ref{eq1}. The current then is integrated with a time constant $\tau_m$, the integration time of the unit, to determine the activation of the unit. In order to account for the temporal effects we introduce the idea of z-filters that keep information about the activity during a time period $\tau_z$. We can see in equation \ref{eq2} that the filter z follows the activity of the unit at any point in time.
+The neural network is composed of firing rate units with the following properties. First the individual units receive current from all the other units, that is, the system is a recurrent neural network with all-to-all connectivity. The input current that a unit receives is  is then  thresholded $\theta$ by the logistic function $\Phi(x) = \frac{1}{1 + \exp(-Gx)}$. This whole process is condensed into the equation \ref{eq1}. The input current is then integrated with a time constant $\tau_m$ to determine the activation of the unit. In order to account for the temporal effects we introduce the idea of z-filters that keep information about the activity during a time period $\tau_z$. We can see in equation \ref{eq2} that the filter z follows the activity of the unit at any point in time.
 
 \begin{align}
 \tau_m \dfrac{dx_i}{dt} &= \Phi\Big(\sum_{j} W_{ij} z_j - \theta \Big) - x_i \label{eq1} \\ 
 \tau_z \dfrac{dz_i}{dt} &= x_i - z_i \label{eq2}
 \end{align}
 
-This system allows for the units to keep influencing the other units through $W$ even when they are not active anymore. We will see how this is fundamental for the sequence processing capabilities of our system. 
+This system allows for the units to keep influencing the other units through $W$ even when they are not longer active. We will see how this property is fundamental for the sequence processing capabilities of our system. 
 
 The connectivity of the system is as depicted in figure \ref{Fig:diagram}. Note that that from each unit emanate two excitatory connections, one that self-reinforces the unit activity $Exc_{self}$ and another that excites the following neuron (contributing to the sequential structure of the activity) $Exc_T$. At the same time every unit inhibits all the units except the next one with $Inh$. Of special relevance are the backwards inhibitory projections that suppress the unit once the next unit in the sequence is activated 
 
@@ -109,7 +109,7 @@ The connectivity of the system is as depicted in figure \ref{Fig:diagram}. Note 
 
 \subsection{The neural network can sustain sequential activity}
 
-In order to recall a particular sequence we cue the first element. This means that we artificially activate the first unit (clamping) of the sequence for a short time. After this initial cue, if the weights are set right, the neural network continues evolving on its own and a particular sequence is recalled. In figure \ref{Fig:recall} we can appreciate a successful recall of a sequence. 
+In order to recall a particular sequence we cue the first element. This means that we artificially activate the first unit (clamping) of the sequence for a short time. After this initial cue, if the weights are set right, the neural network continues evolving on its own and a particular sequence is recalled. In figure \ref{Fig:recall} a successful recall process is shown. 
 
 \begin{figure}[h!]
 \centering
@@ -141,30 +141,41 @@ In order to calculate the recall time we make the following consideration. Once 
 
 
 \subsection{Learning Rule}
+Here we present a learning rule that allows the system to self-organize in the presence of sequential activity, that is, we can equip our network with the capability to learn how to reproduce sequences. We present a learning rule in the equations bellow. The first term is completly hebbian \cite{hebb2005organization} and its role is to strength the connections between units that are activate together. However, in this case, we use the z-filters instead of the activities directly which allow us to bend units in time. We include here another filter like the one in equation \ref{eq2} but with a shorter time constant $\tau_{z_{post}}$. The second term is called synaptic gating \cite{andrew2003spiking} and it allow us to create inhibitory connections when two units are not activated together. We introduce two different variations of this term to explore the functional implications of both. Finally both terms are saturated by maximal and minimal values $w_{max}$ and $w_{min}$. 
 
 \begin{align}
-\tau_w \dfrac{dw}{dt} &= (w_{max} - w) z_{pre}z_{post} + (w_{min} - w) (z_{post} - 1)z_{pre} 
+\tag{pre-synaptic}
+\tau_w \dfrac{dw}{dt} &= (w_{max} - w) z_{pre}z_{post} + (w_{min} - w) (1 - z_{post})z_{pre} \label{eq:pre-synaptic rule}  \\
+\tag{post-synaptic}
+\tau_w \dfrac{dw}{dt} &= \underbrace{(w_{max} - w)}_{\text{saturation}} \underbrace{z_{pre}z_{post}}_{\text{hebbian}} + \underbrace{(w_{min} - w)}_{\text{saturation}}\underbrace{ (1 - z_{pre})z_{post}}_{\text{synaptic-gating}} \label{eq:post-synaptic rule}
 \end{align}
+
+The nature and the role of both the hebbian and the synaptic gating terms are better explained in the diagram shown in figure \ref{Fig:plasticity diagram}. There we can appreciate the the main difference between the two rules is on whether they produce a negative contribution when either $z_{pre}$ and $z_{post}$ is activated. In figure \ref{Fig:epochs} we illustrate the results of the training rule
 
 \begin{figure}[h!]
 \centering
 \includegraphics[scale=1.3]{plasticity_diagram.eps}
-\caption{This is how plasticity works}\label{Fig:plasticity diagram}
+\caption{A scheme of how plasticity works. a) Hebbian term contribution. b) The contribution is negative when the post-synaptic unit is active. c) The contribution is negative when the pre-synaptic unit is active. d) If units are not active there is no decay of the weights.}\label{Fig:plasticity diagram}
 \end{figure}
 
 
 \begin{figure}[h!]
 \centering
 \includegraphics[scale=0.3]{training_rule.eps}
-\caption{The training in action}\label{Fig:epochs}
+\caption{Training with the learning rule. a) An example of training with a small value of $tau_z$. b) Same procedure as in a but with a longer time constant $\tau_z$. c) evolution of weights with the number of epochs. The three situations depicted utilize the pre-synaptic learning rule.}\label{Fig:epochs}
 \end{figure}
+
+
+
+\subsubsection{Learning rule and control}
 
 
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=0.3]{training_rule_quantities.eps}
-\caption{The dynamics of the learning rule}\label{Fig:learning_quantities}
+\includegraphics[scale=0.3]{training_rule_quantities_pre_rule_True.eps}
+\caption{The dynamics of the learning rule}\label{Fig:learning_quantities_pre}
 \end{figure}
+
 
 \textbf{Training time}
 \begin{itemize}
@@ -172,16 +183,20 @@ In order to calculate the recall time we make the following consideration. Once 
 \item  $Inh$: In this case the the negative contributions come from the time that the units are not activated together with their counterparts which is most of the time (except in the brief transition period) and therefore the value saturates quickly to $w_{min}$.
 \item $Exc_{T}$: In this case what matters is the transition time between two 
 \end{itemize} 
+
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.3]{training_rule_quantities_pre_rule_False.eps}
+\caption{The dynamics of the learning rule}\label{Fig:learning_quantities_post}
+\end{figure}
+
  
 \subsection{Disambiguation}
 
 
 \section{Discussion}
 
-\section{Citation}
-This ESANNV2.tex file defines how to insert references, both for
-BiBTeX and non-BiBTeX users.  Please read the instructions in this
-file.
 
 % ****************************************************************************
 % BIBLIOGRAPHY AREA

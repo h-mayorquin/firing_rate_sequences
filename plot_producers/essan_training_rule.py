@@ -79,12 +79,30 @@ divider = make_axes_locatable(ax1)
 cax = divider.append_axes('right', size='5%', pad=0.05)
 fig.colorbar(im, cax=cax)
 
+ax1.set_title(r'$\tau_z$ = ' + str(tau_z))
 ax1.set_xlabel('Pre')
 ax1.set_ylabel('Post')
 ax1.xaxis.set_ticklabels([])
 ax1.yaxis.set_ticklabels([])
 
+# Either a matrix or a legend
+if not independent_labels:
 
+    im3 = ax3.matshow(w1, cmap=cmap)
+    divider = make_axes_locatable(ax3)
+    cax = divider.append_axes('right', size='5%', pad=0.05)
+    fig.colorbar(im3, cax=cax)
+
+    ax3.set_title(r'$\tau_z$ = ' + str(tau_z_1))
+    ax3.set_xlabel('Pre')
+    ax3.set_ylabel('Post')
+    ax3.xaxis.set_ticklabels([])
+    ax3.yaxis.set_ticklabels([])
+
+
+if independent_labels:
+    handles, labels = ax2.get_legend_handles_labels()
+    fig.legend(handles=handles, labels=labels, loc=(0.6, 0.65), fancybox=True, frameon=True, fontsize=28, ncol=1)
 
 # The epochs plot
 ax2.plot(time, w_10,  ':', color='blue', markersize=1, linewidth=2, label=r'$Exc_T$')
@@ -97,34 +115,13 @@ ticks =  [0, 2,    4,   6,   8,   10,  12,  14, 16,  18, 20]
 
 plt.xticks(ticks, labels)
 
-if not independent_labels:
-    print('here 2')
-    # ax2.legend(loc=4)
 
 ax2.set_xlabel('Epochs')
 ax2.set_ylabel('Weight')
 # ax2.set_xlim([-1, 25])
 
-# Either a matrix or a legend
 if not independent_labels:
-    print('here 3')
-    im3 = ax3.matshow(w1, cmap=cmap)
-    divider = make_axes_locatable(ax3)
-    cax = divider.append_axes('right', size='5%', pad=0.05)
-    fig.colorbar(im3, cax=cax)
-
-    ax3.set_xlabel('Pre')
-    ax3.set_ylabel('Post')
-    ax3.xaxis.set_ticklabels([])
-    ax3.yaxis.set_ticklabels([])
-
     handles, labels = ax2.get_legend_handles_labels()
     fig.legend(handles=handles, labels=labels, loc=(0.3, 0.15), fancybox=False, frameon=False, fontsize=28, ncol=3)
-
-else:
-    handles, labels = ax2.get_legend_handles_labels()
-    fig.legend(handles=handles, labels=labels, loc=(0.6, 0.65), fancybox=True, frameon=True, fontsize=28, ncol=1)
-
-
 
 fig.savefig('./plot_producers/training_rule.eps', frameon=False, dpi=110, bbox_inches='tight')

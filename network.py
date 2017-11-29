@@ -93,7 +93,6 @@ def train_network(N, dt, training_time, inter_sequence_time, sequences, tau_z, t
         if save_w_history:
             w_history.append(np.copy(w))
 
-
     dic = {}
     dic['w'] = w
     dic['x'] = x_example

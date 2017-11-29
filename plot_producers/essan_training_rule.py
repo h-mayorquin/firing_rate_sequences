@@ -14,6 +14,7 @@ sns.set_style(style='white')
 from network import run_network_recall, train_network, run_network_recall_limit
 
 independent_labels = False  # Whehter you want an extra weight trained matrix or the labels
+captions = True
 
 N = 10
 tau_z = 0.050
@@ -31,7 +32,7 @@ sequence1 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 sequences = [sequence1]
 
 dic = train_network(N, dt, training_time, inter_sequence_time, sequences, tau_z, tau_z_post,
-                    tau_w, epochs=epochs, max_w=max_w, min_w=min_w, save_w_history=True)
+                    tau_w, epochs=epochs, max_w=max_w, min_w=min_w, save_w_history=True, pre_rule=True)
 
 w = dic['w']
 x_total = dic['x']
@@ -40,7 +41,7 @@ z_post_history = dic['z_post']
 w_history = dic['w_history']
 
 dic = train_network(N, dt, training_time, inter_sequence_time, sequences, tau_z_1, tau_z_post,
-                    tau_w, epochs=epochs, max_w=max_w, min_w=min_w, save_w_history=True)
+                    tau_w, epochs=epochs, max_w=max_w, min_w=min_w, save_w_history=True, pre_rule=True)
 
 w1 = dic['w']
 
@@ -53,6 +54,14 @@ w_01 = w_history[:, 0, 1]
 w_11 = w_history[:, 1, 1]
 
 fig = plt.figure(figsize=(16, 12))
+
+if captions:
+    size = 25
+    fig.text(0.10, 0.85, 'a)', size=size)
+    fig.text(0.55, 0.85, 'b)', size=size)
+    fig.text(0.10, 0.48, 'c)', size=size)
+
+
 gs = gridspec.GridSpec(2, 2)
 ax1 = fig.add_subplot(gs[0, 0])
 ax2 = fig.add_subplot(gs[1, :])

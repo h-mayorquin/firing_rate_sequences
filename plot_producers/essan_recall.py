@@ -72,7 +72,7 @@ if captions:
     fig.text(aux_x, 0.60, 'b)', size=size)
     fig.text(aux_x, 0.35, 'c)', size=size)
     fig.text(0.5, 0.90, 'd)', size=size)
-    fig.text(0.5, 0.40, 'e)', size=size)
+    # fig.text(0.5, 0.40, 'e)', size=size)
 
 
 ax1 = fig.add_subplot(gs[0, 0])

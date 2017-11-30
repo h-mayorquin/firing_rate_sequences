@@ -44,7 +44,7 @@
 %***********************************************************************
 % AUTHORS INFORMATION AREA
 %***********************************************************************
-\author{Ram\'on H. Mart\'inez-Mayorquin $^1$, Anders Lansner $^1$ and Pawel Herman $^1$
+\author{Ram\'on H. Mart\'inez-Mayorquin $^1$, Anders Lansner and $^1$ Pawel Herman $^1$
 %
 % Optional short acknowledgment: remove next line if non-needed
 % \thanks{This is an optional funding source acknowledgement.}
@@ -74,9 +74,8 @@ jdfiogjdiofgj
 \end{abstract}
 
 \section{Introduction}
-There is a growing interest in studying the capability to learn, store and flexibly recall sequential patterns in neural network models. Processing sequential information bears particular relevance to a wide scope of cognitive functionality and behavior in humans \cite{lashley1951problem}. Hebb proposed that sequential activation of neural cell assemblies, referred to as phases sequences, form the basis of the human thought process \cite{hebb2005organization}. The question as to how a novel sequence of items is stored and recalled in the corrected order has been extensively studied in the context of memory systems among others. Besides intensive efforts in this direction undertaken in cognitive psychology \cite{hurlstone2014memory} the problem of sequence learning has also attracted a lot of theoretical interest. It has resulted in the development of different computational network models simulating the brain's capabilities to process sequence information. Among them are network approaches developed in the realm of rate based models that offer a generic context for sequence memory function \cite{amari1972learning}\cite{kohonen1977principle}\cite{sandberg2002bayesian}. The work presented here belongs to that category of studies and conceptually builds on \cite{sandberg2002bayesian}. In particular we rely on a simple recurrent neural network architecture and incorporate the concept of synaptic filtering into a basic Hebbian learning rule with synaptic gating \cite{andrew2003spiking} to study the network's capabilities to learn and recall sequences of memory items. The proposed rate based model constitutes a well-controlled framework for studying the fundamental synaptic mechanisms and identifying key parameters responsible for sequence processing capabilities in a dynamical connectionist system with all-to-all recurrent connectivity pattern. 
-%
-%A prominent share of this computaitonal endevaour is linked to spiking neural network approaches to learn precise patterns of spike sequences with biologically plausible local learning rules \cite{ans1994neural}\cite{dehaene1987neural}\cite{gutig2006tempotron}\cite{ponulak2010supervised}.
+There is a growing interest in studying the capability to learn, store and flexibly recall sequential patterns in neural network models. Processing sequential information bears particular relevance to a wide scope of cognitive functionality and behavior in humans \cite{lashley1951problem}. Hebb proposed that sequential activation of neural cell assemblies, referred to as phases sequences, form the basis of the human thought process \cite{hebb2005organization}. Serial order can be attributed to speech perception and generation, motor control and planning as well as goal directed behavior orchestrated by working memory. Therefore the question as to how a novel sequence of items is stored and recalled in the corrected order has been extensively studied in the context of memory systems among others. Besides intensive efforts in this direction undertaken in the domain of cognitive neuroscience and psychology \cite{hurlstone2014memory} the problem of sequence learning has also attracted a lot of theoretical interest. It has resulted in the development of different computational network models simulating the brain's capabilities to process sequence information. A prominent share of this computaitonal endevaour is linked to spiking neural network approaches to learn precise patterns of spike sequences with biologically plausible local learning rules \cite{ans1994neural}\cite{dehaene1987neural}\cite{gutig2006tempotron}\cite{ponulak2010supervised}. Another group of network approaches developed in the realm of rate based models offers a more generic context for sequence memory function \cite{amari1972learning}\cite{kohonen1977principle}\cite{sandberg2002bayesian}. The work presented here belongs to that category of studies and conceptually builds on \cite{sandberg2002bayesian}. In particular we rely on a simple recurrent neural network architecture and incorporate the concept of synaptic filtering into a basic Hebbian learning rule with synaptic gating \cite{andrew2003spiking} to study the network's capabilities to learn and recall sequences of memory items. The proposed rate based model constitutes a well-controlled framework for studying the fundamental synaptic mechanisms and identifying key parameters responsible for sequence processing capabilities in a dynamical connectionist system with all-to-all recurrent connectivity pattern. 
+
 
 \section{Methods}
 
@@ -140,17 +139,28 @@ With the knowledge above in mind we can envision the following  failure scenario
 
 \subsection{The neural network possess a wide dynamic range}
 
-A common problem in sequence learning is to scale the time duration of the sequence according to the contextual demands \cite{murray2017learning}. For a neural network it means that the dynamics of sequence recall can be flexibly controlled with the network parameters after the training process is completed. The recall time can be defined as the temporal length of the activation of the individual units during the sequence retrieval. In the network there are two key parameters that are directly implicated in the regulation of the recall time: the transition weight, $Exc_T$ and the threshold, $\theta$, which control how long it takes to recruit the next unit in a sequence.  By taking into account the competition between all the currents involved and the threshold we can calculate exactly the point at which the unit will become suppressed:
+A common problem in sequence learning is to scale the time duration of the sequence according to the contextual demands \cite{murray2017learning}. For a neural network it means that the dynamics of sequence recall can be flexibly controlled with the network parameters after the training process is completed. The recall time can be defined as the temporal length of the activation of the individual units during the sequence retrieval. In the network there are two key parameters that are directly implicated in the regulation of the recall time: the transition weight, $Exc_T$ and the threshold, $\theta$, which control how long it takes to recruit the next unit in a sequence. Below we derive the estimate of how $Exc_T$ affects the recall time and the reasoning for $\theta$ is analogous. 
+
+
+
+In order to calculate the recall time we make the following consideration. Once the unit $U_1$ becomes activated the filter $z_1$ starts growing thereby contribution to the excitatory current input, $z_1 Exc_T$, to the next unit $U_2$. The point in time at which this current overcomes the threshold marks the end of the recall process for a specific item in the sequence. Following that reasoning we can solve the equation $Exc_{T}(1 - e^{-\frac{t}{\tau_z}}) - \theta = 0$ to estimate the recall time. As a result, we obtain the following expression:
+
+\begin{align}
+T_{recall} = \tau_z \log\Big(\frac{Exc_T}{Exc_T - \theta} \Big)
+\end{align}
+
+This expression has a singularity at $Exc_T = \theta$, which implies that the recall time can be made arbitrarily long by setting $Exc_T$ close to the threshold. However due to the all-to-all connectivity the are other contributions which we can take into account with:
 
 \begin{align}
 T_{recall} = \tau_z \log\Big(\frac{Exc_T + Inh}{Exc_T - \theta}\Big) \label{eq:recall_complex}
 \end{align}
 
-This expression has a singularity at $Exc_T = \theta$, which implies that the recall time can be made arbitrarily long by setting $Exc_T$ close to the threshold. Fig. \ref{Fig:dynamical_range} illustrates the wide dynamical range of the recall time in our network model.
+Figure \ref{Fig:dynamical_range} illustrates the wide dynamical range of the recall time in our network model (both simulated and estimated as presented above)
+
 
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=0.20]{dynamical_range.eps}
+\includegraphics[scale=0.28]{dynamical_range.eps}
 \caption{The network posses a wide dynamical range. a) Here we compare the calculated thoretical expression with simulations with our network for different values of $Exc_T$. Note the singularity at $\theta$. b) The network activity with a short recall time. c) The network activity with a longer recall time ($Exc_T$ close to $\theta$).}\label{Fig:dynamical_range}
 \end{figure}
 
@@ -159,12 +169,10 @@ This expression has a singularity at $Exc_T = \theta$, which implies that the re
 \subsection{Learning Rule}
 Our learning protocol consists in fixing (clamping) each unit of the sequence in succession for a given amount of time (training time). We perform this process an epochs number of times. It is important to note that while learning there is a period of one second between each epoch or presentation that serves the purposes of avoiding self-interference.  
 
-We illustrate the results of training in Fig. \ref{Fig:epochs} with two connectivity matrix capable of recalling, note the effects of $\tau_z$ in the strength and extent of the $Exc_T$ effects. Furthermore we can appreciate that the weights converge and stabilized with few epochs of training. 
-
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.25]{training_rule.eps}
+\includegraphics[scale=0.3]{training_rule.eps}
 \caption{The effect of training with the learning rule. a) An example of training with a small value of $tau_z=0.050s$. b) Same procedure as in a but with a longer time constant $\tau_z=0.150s$. c) evolution in time of the connection weights from the first to the second unit $Exc_T$, the one from the second back to the first unit $Inh$ and finally of the second unit into itself $Exc_{self}$. Five epochs of length $2s$ are shown here, note that this is enough time for the weights to stabilize.}\label{Fig:epochs}
 \end{figure}
 
@@ -193,7 +201,8 @@ We illustrate the results of training in Fig. \ref{Fig:epochs} with two connecti
 
  
 
-%\section{Discussion}
+
+\section{Discussion}
 
 
 % ****************************************************************************

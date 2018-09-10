@@ -12,11 +12,11 @@ def get_recall_duration_for_pattern(x_history, pattern, dt):
     return duration
 
 
-def get_recall_duration_sequence(x_history):
+def get_recall_duration_sequence(x_history, dt):
 
     durations = []
     for pattern in range(x_history.shape[1]):
-        duration = get_recall_duration_for_pattern(x_history, pattern)
+        duration = get_recall_duration_for_pattern(x_history, pattern, dt)
         durations.append(duration)
 
     return np.nanmedian(durations[1:-1]), np.nanstd(durations[1:-1]), durations

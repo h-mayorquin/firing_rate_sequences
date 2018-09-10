@@ -42,10 +42,15 @@ def run_network_recall(N, w, G, threshold, tau_m, tau_z,  T, dt, I_cue, T_cue, s
 
 
 def train_network(N, dt, training_time, inter_sequence_time, sequences, tau_z, tau_z_post, tau_w,
-                  epochs=1, max_w=1.0, min_w=None, save_w_history=False, pre_rule=True):
+                  epochs=1, max_w=1.0, min_w=None, gh=1.0, gah=1.0, save_w_history=False, pre_rule=True):
 
     w = np.zeros((N, N))
     w_history = [w]
+    normal_history = []
+    negative_history = []
+    increase_history = []
+    decrease_history = []
+
 
     inter_sequence_steps = int(inter_sequence_time / dt)
 
@@ -84,28 +89,39 @@ def train_network(N, dt, training_time, inter_sequence_time, sequences, tau_z, t
         if pre_rule:
             negative = np.outer(1 - z_post, z)
         else:
-            negative = np.outer(1 - z, z_post)
+            negative = np.outer(z_post, 1 - z)
+
         if min_w is None:
             w += (dt / tau_w) * ((max_w - w) * normal - negative)
         else:
-            w += (dt / tau_w) * ((max_w - w) * normal + (min_w - w) * negative)
+            increase_terms = (max_w - w) * normal
+            decrease_terms = (min_w - w) * negative
+            w += (dt / tau_w) * (gh * increase_terms + gah * decrease_terms)
 
         if save_w_history:
             w_history.append(np.copy(w))
+            negative_history.append(np.copy(negative))
+            normal_history.append(np.copy(normal))
+            decrease_history.append(np.copy(decrease_terms))
+            increase_history.append(np.copy(increase_terms))
 
     dic = {}
     dic['w'] = w
-    dic['x'] = x_example
+    dic['x'] = x_total
     dic['z'] = z_history
     dic['z_post'] = z_post_history
 
     if save_w_history:
         dic['w_history'] = np.array(w_history)
+        dic['normal'] = np.array(normal_history)
+        dic['negative'] = np.array(negative_history)
+        dic['decrease history'] = np.array(decrease_history)
+        dic['increase history'] = np.array(increase_history)
 
     return dic
 
 
-def run_network_recall_limit(N, w, G, threshold, tau_m, tau_z,  T, dt, I_cue, T_cue, sigma=0):
+def run_network_recall_limit(N, w, G, threshold, tau_z,  T, dt, I_cue, T_cue, sigma=0):
 
     x = np.zeros(N)
     current = np.zeros(N)
@@ -139,6 +155,8 @@ def run_network_recall_limit(N, w, G, threshold, tau_m, tau_z,  T, dt, I_cue, T_
     dic['current'] = current_history
 
     return dic
+
+
 
 
 def run_network_recall_limit_end(N, w, G, threshold, tau_m, tau_z,  T, dt, I_cue, I_end, T_cue, sigma=0):

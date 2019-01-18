@@ -1,4 +1,4 @@
-\documentclass{esannV2}
+\documentclass[a4paper]{esannV2}
 \usepackage[dvips]{graphicx}
 \usepackage[latin1]{inputenc}
 \usepackage{float}
@@ -39,7 +39,7 @@
 
 \begin{document}
 %style file for ESANN manuscripts
-\title{Sequence learning and recall in recurrent neural networks with time filtered units.}
+\title{Sequence learning and recall in recurrent neural networks with memory traces}
 
 %***********************************************************************
 % AUTHORS INFORMATION AREA
@@ -66,15 +66,11 @@ Department of Computational Science and Technology - Stockholm, Sweden.
 
 \maketitle
 
-\begin{abstract}
-We demonstrate among others how the learned sequences can be recalled at different speeds largely independent of the encoding process. diojafoids sf dsfsd siofjsdoif
-sifjsodif sdjfiosdjf sdio jsdoi fjsoijgi jsoifd jdoifg jodifj iodfj odifjg idfjg
-fdjgidfjg djf oidfjgiodfj jdf idfjg odfijg difjg odifjg difg jj dijdfgoidf 
-jdfiogjdiofgj 
+\begin{abstract} A rate-based recurrent network model equipped with a basic Hebbian learning rule including synaptic gating and memory traces is shown in this study to effectively learn sequences of activity patterns. The proposed computational framework facilitates understanding key mechanisms and the role of parameters in controlling the network performance and fundamental dynamics. We demonstrate among others how the sequence recall speed can be flexibly adjusted. 
 \end{abstract}
 
 \section{Introduction}
-There is a growing interest in studying the capability to learn, store and flexibly recall sequential patterns in neural network models. Processing sequential information bears particular relevance to a wide scope of cognitive functionality and behavior in humans \cite{lashley1951problem}. Hebb proposed that sequential activation of neural cell assemblies, referred to as phases sequences, form the basis of the human thought process \cite{hebb2005organization}. The question as to how a novel sequence of items is stored and recalled in the corrected order has been extensively studied in the context of memory systems among others. Besides intensive efforts in this direction undertaken in cognitive psychology \cite{hurlstone2014memory} the problem of sequence learning has also attracted a lot of theoretical interest. It has resulted in the development of different computational network models simulating the brain's capabilities to process sequence information. Among them are network approaches developed in the realm of rate based models that offer a generic context for sequence memory function \cite{amari1972learning}\cite{kohonen1977principle}\cite{sandberg2002bayesian}. The work presented here belongs to that category of studies and conceptually builds on \cite{sandberg2002bayesian}. In particular we rely on a simple recurrent neural network architecture and incorporate the concept of synaptic filtering into a basic Hebbian learning rule with synaptic gating \cite{andrew2003spiking} to study the network's capabilities to learn and recall sequences of memory items. The proposed rate based model constitutes a well-controlled framework for studying the fundamental synaptic mechanisms and identifying key parameters responsible for sequence processing capabilities in a dynamical connectionist system with all-to-all recurrent connectivity pattern. 
+There is a growing interest in studying the capability to learn, store and flexibly recall sequential patterns in neural network models. Processing sequential information bears particular relevance to a wide scope of cognitive functionality and behavior in humans \cite{lashley1951problem}. Hebb proposed that sequential activation of neural cell assemblies, referred to as phases sequences, form the basis of the human thought process \cite{hebb2005organization}. The question of how a novel sequence of items is stored and recalled in the corrected order has been extensively studied in the context of memory systems among others. Besides intensive efforts in this direction undertaken in cognitive psychology \cite{hurlstone2014memory} the problem of sequence learning has also attracted a lot of theoretical interest. It has resulted in the development of different computational network models simulating the brain's capabilities to process sequence information. Among them are network approaches developed in the realm of rate based models that offer a generic context for sequence memory function \cite{amari1972learning}\cite{kohonen1977principle}\cite{sandberg2002bayesian}. The work presented here belongs to that category of studies and conceptually builds on \cite{sandberg2002bayesian}. In particular we rely on a simple recurrent neural network architecture and incorporate the concept of synaptic filtering into a basic Hebbian learning rule with synaptic gating \cite{andrew2003spiking} to study the network's capabilities to learn and recall sequences of memory items. The proposed rate based model constitutes a well-controlled framework for studying the fundamental synaptic mechanisms and identifying key parameters responsible for sequence processing capabilities in a dynamical connectionist system with all-to-all recurrent connectivity pattern. 
 %
 %A prominent share of this computaitonal endevaour is linked to spiking neural network approaches to learn precise patterns of spike sequences with biologically plausible local learning rules \cite{ans1994neural}\cite{dehaene1987neural}\cite{gutig2006tempotron}\cite{ponulak2010supervised}.
 

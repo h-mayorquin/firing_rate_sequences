@@ -27,7 +27,7 @@ tau_m = 0.010
 I_cue = 0
 I_end = 5
 T = 10.0
-pre_rule = False
+pre_rule = True
 
 
 pattern = 3
@@ -64,11 +64,9 @@ if not saved_matrix:
 
         duration = get_recall_duration_for_pattern(x_history, pattern, dt)
 
-
         self = w[pattern, pattern]
         exc = w[pattern, pattern_from]
         inh = w[pattern_from, pattern]
-
 
         y[index, 0] = self
         y[index, 1] = exc
@@ -86,28 +84,3 @@ else:
     npz_file = np.load(outfile)
     X = npz_file['x']
     y = npz_file['y']
-
-# Here we do the classifier
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1, random_state=0)
-
-reg = linear_model.LinearRegression(fit_intercept=False, n_jobs=-1)
-reg.fit(X_train, y_train)
-score = reg.score(X_test, y_test)
-A = reg.coef_
-B = np.linalg.inv(A)
-print('score', score)
-
-
-# I want to calculate the values for which the self-excitation and the transition are positive
-positive_A = y[:, 0] > 0
-positive_T = y[:, 1] > 0
-negative_I = y[:, 2] < 0
-
-# Now the values that generated the valures in the correct domain are
-domain_indexes = positive_A * positive_T * negative_I
-X_right = X[domain_indexes, : ]
-
-
-
-
-
